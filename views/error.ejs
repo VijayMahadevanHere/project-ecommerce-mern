@@ -1,3 +1,50 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #444;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        margin-top: 50px;
+      }
+
+      h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+       <div class="container">
+        <div><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy4thraqTyCUgOtKe6J_--nmZchLhXFQXcFRtV_J9wmg&usqp=CAU&ec=48600113" alt=""></div>
+
+      <h1>Oops! Something went wrong.</h1>
+     <p><%=error%></p>
+      <p>We're sorry, but the page you're looking for can't be found.</p>
+      <p>Please try again later, or contact us if you continue to experience issues.</p>
+    </div>
+  </body>
+</html>
+

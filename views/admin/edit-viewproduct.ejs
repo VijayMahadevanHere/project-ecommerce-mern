@@ -21,9 +21,14 @@
               <% } )%>
             </select>
           
+  
             <label for="">Quantity</label>
             <input type="text" name="quantity" class="form-control" value="<%=editproduct.Quantity%>" />
-  
+      
+            <label for="">Discount</label>
+            <input type="text" name="discount" class="form-control" value="<%=editproduct.discountPerCent%>" />
+
+
             <label for="">Image</label>
             <img src="/uploads/<%=editproduct.Image[0]%>" alt="" style="width:100px;height:auto" id="imageEdit" class="mt-3 mb-3">
             <img src="/uploads/<%=editproduct.Image[1]%>" alt="" style="width:100px;height:auto" id="imageEdit" class="mt-3 mb-3">

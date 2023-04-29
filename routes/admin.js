@@ -1,73 +1,97 @@
-var express = require('express');
+const express = require("express");
 const { getMaxListeners } = require("../app");
-var router = express.Router();
-const adminControl = require('../controller/admincontrol')
-const adminHelper = require('../helpers/adminHelpers')
-const db = require('../model/connection')
-const multer = require('multer')
-const photoload = require('../multer/multer');
-const admincontrol = require('../controller/admincontrol');
-const adminMiddleware = require('../middleware/middleware');
+const router = express.Router();
+const adminControl = require("../controller/admincontrol");
+const photoload = require("../multer/multer");
+const admincontrol = require("../controller/admincontrol");
+const adminMiddleware = require("../middleware/middleware");
 
-router.get('/', adminControl.showDashboard)
+router.get("/",adminMiddleware.adminAuth, adminControl.getDashboard);
 
-router.route('/login')
-    .get(adminMiddleware.adminAuth,adminControl.getAdminLogin)
-    .post(adminControl.postAdminLogin)
+router
+  .route("/login")
+  .get(adminMiddleware.adminAuth, adminControl.getAdminLogin)
+  .post(adminControl.postAdminLogin);
 
+router.get("/logout", adminControl.adminLogout);
 
-router.get('/logout', adminControl.adminLogout)
+router.get("/view-users", adminMiddleware.adminAuth, adminControl.getUserlist);
 
-router.get('/view-users',adminMiddleware.adminAuth,adminControl.getUserlist)
+router.get("/block-users/:id", adminControl.blockUser);
 
+router.get("/unblock-users/:id", adminControl.unblockUser);
 
-router.get('/block-users/:id',adminControl.blockUser)
+router
+  .route("/add-product")
+  .get(adminMiddleware.adminAuth, adminControl.addProducts)
+  .post(photoload.uploads, adminControl.postProducts);
 
-router.get('/unblock-users/:id',adminControl.unblockUser)
+router.get(
+  "/view-product",
+  adminMiddleware.adminAuth,
+  adminControl.viewProducts
+);
 
-router.route("/add-product")
-        .get(adminMiddleware.adminAuth,adminControl.addProducts)
-         .post(photoload.uploads, adminControl.postProducts)
+router
+  .route("/edit-product/:id")
+  .get(adminControl.editProduct)
+  .post(photoload.editeduploads, adminControl.post_EditProduct);
 
+router.get(
+  "/add-category",
+  adminMiddleware.adminAuth,
+  adminControl.getCategory
+);
 
-router.get('/view-product',adminMiddleware.adminAuth, adminControl.viewProducts)
+router.post(
+  "/add-category",
+  adminMiddleware.adminAuth,
+  adminControl.postCategory
+);
 
-router.route('/edit-product/:id')
-        .get(adminControl.editProduct)
+router
+  .route("/edit-banner/:id")
+  .get(admincontrol.editBanner)
+  .post(photoload.editeduploads, admincontrol.post_EditBanner);
 
-        .post(photoload.editeduploads,adminControl.post_EditProduct)
+router
+  .route("/add-banner")
+  .get(adminMiddleware.adminAuth, adminControl.getBanner)
+  .post(photoload.uploads, adminControl.postBanner);
 
+router.get("/delete-category/:id", adminControl.deleteCategory);
 
-router.get('/add-category',adminMiddleware.adminAuth, adminControl.getCategory)
+router.get("/delete-product/:id", adminControl.deleteProduct);
 
+router.get("/delete-banner/:id", adminControl.deleteBanner);
+router.get("/orderDetails/:id",adminMiddleware.adminAuth,adminControl.OrderDetails);
+router.get("/view-banner", adminMiddleware.adminAuth, adminControl.viewBanner);
+router.get("/coupon", adminMiddleware.adminAuth, adminControl.showaddCoupon);
+router.post("/coupon", adminMiddleware.adminAuth, adminControl.addCoupon);
+router.get("/view-coupon", adminMiddleware.adminAuth, adminControl.viewCoupon);
+router.get("/orderList", adminMiddleware.adminAuth, adminControl.viewOrderList);
+router.get(
+  "/sales_report",
+  adminMiddleware.adminAuth,
+  adminControl.getSalesReport 
+);
+router.post(
+  "/sales_report",
+  adminMiddleware.adminAuth,
+  adminControl.postSalesReport
+);
 
-router.route("/edit-banner/:id")
-      .get(admincontrol.editBanner)
-      .post(photoload.editeduploads,admincontrol.post_EditBanner)
-
-
-
-router.route("/add-banner")
-      .get(adminMiddleware.adminAuth, adminControl.getBanner)
-      .post(photoload.uploads, adminControl.postBanner)
-
-router.post('/add-category',adminMiddleware.adminAuth, adminControl.postCategory)
-
-router.get('/delete-category/:id', adminControl.deleteCategory)
-
-router.get('/delete-product/:id',adminControl.deleteProduct)
-
-router.get('/delete-banner/:id',adminControl.deleteBanner)
-
-
-
-router.get('/view-banner',adminMiddleware.adminAuth,adminControl.viewBanner)
-
-
-
-
-
-
+router.get(
+  "/category-discount",
+  adminMiddleware.adminAuth,
+  adminControl.viewCatdiscount
+);
+router.get("/apply_offer",adminControl.applyOffer)
+ 
+router.get('/apply_offer/:id',adminControl.getAddOffer)
+router.post('/apply_offer/:id',adminControl.PostAddOffer)
+router.get('/shipOrder/:id',adminControl.shipOrder)
+router.get('/deliverOrder/:id',adminControl.deliverOrder)
 
 
 

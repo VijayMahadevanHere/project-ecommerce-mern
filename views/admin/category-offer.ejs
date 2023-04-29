@@ -1,0 +1,29 @@
+<style>
+    .category {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+    .category:hover {
+        background-color: #e0e0e0;
+    }
+    .discount-input {
+        margin-top: 10px;
+        display: none;
+    }
+</style>
+
+<body>
+<h1>Discount Categories</h1>
+<div >
+    <% category.forEach(function(cat) { %>
+    <div class="category" id="category" ><%= cat.CategoryName%></div>
+    <a class="btn btn-success btn-sm" href="/admin/apply_offer/<%= cat._id%>">Apply Offer</a>
+
+    <% }) %>
+</div>
+
+
+</body>
+

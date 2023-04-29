@@ -1,0 +1,242 @@
+ <!-- <section style="margin-top: 5%; margin-bottom: 5%;">
+   
+    <div class="container mt-5"
+        style="padding: 5%; box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);">
+        <form action="" id="checkout-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Enter Delivery Details</h2>
+                    <div>
+
+                        <label for="">Address</label>
+                        <input class="form-control" type="text" id="address" name="address">
+
+                        <label for="">Pincode</label>
+                        <input class="form-control" type="text" id="pincode" name="pincode">
+
+                        <label for="">Mobile</label>
+                        <input class="form-control" type="text" id="mobile" name="mobile">
+                        <input type="text" name="userId" id="" value="<%=locals.userid%>" hidden>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="container mt-5 ml-5 checkout"
+                        style="padding: 5%; background: #f2f3f4; box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);">
+                        <h5>Total Amount: Rs.</h5>
+                        <hr>
+                        <div class="payment">
+                            <p>Payment Method</p>
+                            <label class="radio-inline ">
+                                <input type="radio" name="payment-method" value="COD" checked>COD
+                            </label>
+                            <label class="radio-inline mt-2">
+                                <input type="radio" name="payment-method" value="ONLINE">Online Payment
+                            </label>
+
+                            <button class=" btn btn-dark ml-2 mr-2" >Checkout</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</section>  -->
+<section>
+   <div class="row">
+   <div class="col-12">
+     <div class="divider mt-50 mb-50"></div>
+    </div>
+      </div>
+            <div class="row">
+                <form action="" id="checkout-form">
+                    
+                <div class="col-md-6"   style="float: left;">
+                    <div class="mb-25">
+                        <h4>Billing Details</h4>
+                    </div>
+                    <button type="button" class="btn btn-dark mb-2" data-toggle="modal" data-target="#exampleModal">
+                        Add address
+                    </button>
+                    <% address.forEach(function(address) { %>
+                     <div class="form-check">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <input class="form-check-input" type="radio" value="<%=address._id%>" name="address" >
+                               
+                              
+                                <h5 class="card-title"><%=address.fname%></h5>
+                                <h5 class="card-subtitle mb-2 text-muted"><%=address.street%></h6>
+                                <h6 class="card-subtitle mb-2 text-muted"><%=address.apartment%></h6>
+                                <h6 class="card-subtitle mb-2 text-muted"><%=address.city%></h6>
+                                <h6 class="card-subtitle mb-2 text-muted"><%=address.state%></h6>
+                                <h6 class="card-subtitle mb-2 text-muted"><%=address.mobile%></h6>
+                                <h6 class="card-subtitle mb-2 text-muted"><%=address.pincode%></h6>
+                                   
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+                 <div class="col-md-4" style="float: left;">
+                    <div class="container mt-5 ml-5 checkout"
+                        style="padding: 5%; background: #f2f3f4; box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);">
+                        <h5>Total Amount: Rs. <%=locals.totalAmount[0].total%></h5>
+                        <hr>
+                        <div class="payment">
+                            <p>Payment Method</p>
+                            <label class="radio-inline ">
+                                <input type="radio" name="payment-method" value="COD" checked>COD
+                                <input type="hidden" name="user" value="<%= locals.userid %>">
+
+                            </label>
+                            <label class="radio-inline mt-2">
+                                <input type="radio" name="payment-method" value="ONLINE">Online Payment
+                            </label>
+                            <% if (totalAmount[0].total < wallet.Amount) { %>
+                                <label class="radio-inline mt-2">
+                                    <input type="radio" name="payment-method" value="wallet">WALLET
+                                </label>
+                              <% } %>
+                              
+                            <button type="submit" class=" btn btn-dark ml-2 mr-2" >Checkout</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+      
+       
+</section>
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script> 
+
+<script>
+    $("#checkout-form").submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/place-order',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                
+                if (response.codstatus) {
+                    swal({
+    title: "Good job!",
+    text: "Click the button below to go to your orders",
+    icon: "success",
+    buttons: {
+      redirect: {
+        text: "Orders",
+        value: "redirect",
+      },
+      cancel: "Ok",
+    },
+  }).then((value) => {
+    if (value === "redirect") {
+      window.location.href = "orderList";
+    }
+  });  
+                }else if(response.walletstatus){
+                    swal({
+    title: "Good job!",
+    text: "Click the button below to go to your orders",
+    icon: "success",
+    buttons: {
+      redirect: {
+        text: "Orders",
+        value: "redirect",
+      },
+      cancel: "Ok",
+    },
+  }).then((value) => {
+    if (value === "redirect") {
+      window.location.href = "orderList";
+    }
+  }); 
+                } else {
+                    razorpayPayment(response)
+                }
+
+            }
+        })
+    })
+
+    function razorpayPayment(order) {
+    
+        let options = {
+            "key": "rzp_test_lE8v418GfYy9WQ", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Vijay",
+            "description": "Test Transaction",
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_ARv3zC1qRhANG9Ml8KR01oyXAOukqjx0Y5ZXE_deww&usqp=CAU&ec=48600113",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+
+                verifyPayment(response, order)
+            },
+            "prefill": { 
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9999999999"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+    function verifyPayment(payment, order) {
+    
+        $.ajax({
+         
+            url: 'verify-payment',
+            data: {
+                payment,
+                order
+            },
+            method: 'post',
+            success: (response) => {
+           
+                if (response.status) {
+                    window.location.href = "orderPlaced";
+                    
+                } else {
+                    alert("Payment Failed")
+                }
+            }
+        })
+    }
+</script>
+<style>
+    input[type=radio] {
+        width: 20px;
+        height: 20px;
+    }
+
+    label.radio-inline {
+        display: flex;
+        align-items: center;
+    }
+
+    .checkout {
+        border: 1px solid;
+        border-radius: 3px;
+        padding: 30px;
+    }
+
+    .payment {
+        padding-bottom: 16px;
+    }
+</style>

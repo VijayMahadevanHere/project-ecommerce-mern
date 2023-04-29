@@ -1,0 +1,493 @@
+<!-- Quick view -->
+<style>
+    .zoom {
+      padding: 50px;
+      background-color: rgb(247, 247, 247);
+      transition: transform .2s; /* Animation */
+    
+      margin: 0 auto;
+    }
+    
+    .zoom:hover {
+      transform: scale(1.6); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+    </style>
+  
+  
+<aside style="background-color:rgb(246, 247, 248); height: 425px; border-color: black;" class="navbar-aside  float-left " id="offcanvas_aside">
+  
+  <!-- <div class="aside-top">
+        
+
+  <label for="customRange1" class="form-label"><h4>Price range</h4></label>
+
+  <input type="range" class="form-range form-range-sm" id="customRange1" min="0" max="50000">
+  <div id="rangeValue"></div>
+
+  </div> -->
+  <div>
+    <form id="sort-form" method="POST" action="/sort">
+      <div class="sort-container">
+        <select
+        id="sort-select"
+        name="selectedValue"
+        onchange="this.form.submit()"
+        >
+          <option value=""><a href="#">Filter by Price</a></option>
+          <option value="price-low-to-high">
+            <a href="#">Price: Low to High</a>
+          </option>
+          <option value="price-high-to-low">
+            <a href="#">Price: High to Low</a>
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div>
+    <form action="/filterCategory" method="post">
+      <select name="selectedValue" id=""  onchange="this.form.submit()">
+      
+        <% Category.forEach(function(Category) { %>
+          <option value="#" hidden>Filter by Categories</option>
+          <option value="<%= Category.CategoryName%>">
+            <%= Category.CategoryName%>
+          </option>
+          <% }) %>
+      </select>
+    </form>
+  </div>
+</aside>
+  <section>
+  
+  
+    <main class="main  ">
+      
+      <% banner.forEach(function(banner) { %>
+        <section class="pt-25 pb-20">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-9">
+                <div class="position-relative">
+                  <div class="hero-slider-1 style-3 dot-style-1 dot-style-1-position-1">
+                    <div class="single-hero-slider single-animated-wrap">
+                      <div class="container">
+                        <div class="slider-1-height-3 slider-animated-1">
+                          <div class="hero-slider-content-2">
+                            <h4 class="animated" style="font-size: 28px; color: #fff; font-weight: bold;">Trade-In Offer</h4>
+                            <h2 class="animated fw-900" style="color: chartreuse; font-size: 56px; margin: 20px 0;">Super Value Deals</h2>
+                            <h1 class="animated fw-900" style="color: crimson; font-size: 84px; margin: 20px 0;">
+                              <%= banner.Productname %>
+                            </h1>
+                            <p class="animated" style="color: #fff; font-size: 28px; margin-bottom: 40px;">
+                              Save more with coupons &amp; up to 70% off
+                            </p>
+                            <a class="animated btn btn-brush btn-brush-3" href="#" style="background-color: crimson; color: #fff; font-size: 28px; padding: 20px 50px;">Shop Now</a>
+                          </div>
+                          <div class="">
+                            <img style="height: 400px; width: 100%;" src="/uploads/<%= banner.Image %>" alt="" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <% }) %>
+        
+   
+          <section class=" section-padding wow fadeIn animated">
+            <div class="container">
+  
+              <!--End nav-tabs-->
+              <div class="tab-content wow fadeIn animated" id="">
+                <div class="tab-pane fade show active" id="" role="tabpanel" aria-labelledby="tab-one">
+                  <div class="row product-grid-4">
+  
+  
+  
+                    <% response1.forEach(function(response1) { %>
+  
+                      <div class="modal fade custom-modal" id="quickViewModal<%= response1._id %>" tabindex="-1"
+                        aria-labelledby="quickViewModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                  <div class="detail-gallery">
+                                    <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+  
+                                    <div class="product-image-slider ">
+                                     
+                                        <figure class="border-radius-10 zoom">
+                                          <img src="/uploads/<%= response1.Image[0] %>" alt="product image" />
+                                        </figure>
+                                      
+                                    
+                                  
+                                      <figure class="brder-radius-10 zoom">
+                                        <img src="/uploads/<%= response1.Image[1] %>" alt="product image" />
+                                      </figure>
+  
+  
+                                
+                                       
+                                      
+                                    
+                                    </div>
+  
+                                    <div class="slider-nav-thumbnails pl-15 pr-15">
+                                      <div>
+                                        <img src="/uploads/<%= response1.Image[0] %>" alt="product image" />
+                                      </div>
+                                      <div>
+                                        <img src="/uploads/<%= response1.Image[1] %>" alt="product image" />
+                                      </div>
+                                     
+                                    </div>
+                                  </div>
+                                    
+                                  <div class="social-icons single-share">
+                                    <ul class="text-grey-5 d-inline-block">
+                                      <li><strong class="mr-10">Share this:</strong></li>
+                                      <li class="social-facebook">
+                                        <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt="" /></a>
+                                      </li>
+                                      <li class="social-twitter">
+                                        <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt="" /></a>
+                                      </li>
+                                      <li class="social-instagram">
+                                        <a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt="" /></a>
+                                      </li>
+                                      <li class="social-linkedin">
+                                        <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt="" /></a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                  <div class="detail-info">
+                                    <h3 class="title-detail mt-30">
+                                      Colorful Pattern Shirts HD450
+                                    </h3>
+                                    <div class="product-detail-rating">
+                                      <div class="pro-details-brand">
+                                        <span>
+                                          Brands:
+                                          <a href="shop-grid-right.html">Bootstrap</a></span>
+                                      </div>
+                                      <div class="product-rate-cover text-end">
+                                        <div class="product-rate d-inline-block">
+                                          <div class="product-rating" style="width: 90%"></div>
+                                        </div>
+                                        <span class="font-small ml-5 text-muted">
+                                          (25 reviews)</span>
+                                      </div>
+                                    </div>
+                                    <div class="clearfix product-price-cover">
+                                      <div class="product-price primary-color float-left">
+                                        <ins><span class="text-brand">$120.00</span></ins>
+                                        <ins><span class="old-price font-md ml-15">$200.00</span></ins>
+                                        <span class="save-price font-md color3 ml-15">25% Off</span>
+                                      </div>
+                                    </div>
+                                    <div class="bt-1 border-color-1 mt-15 mb-15"></div>
+                                    <div class="short-desc mb-30">
+                                      <p class="font-sm">
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                        Aliquam rem officia, corrupti reiciendis minima nisi modi,!
+                                      </p>
+                                    </div>
+  
+                                    <div class="attr-detail attr-color mb-15">
+                                      <strong class="mr-10">Color</strong>
+                                      <ul class="list-filter color-filter">
+                                        <li>
+                                          <a href="#" data-color="Red"><span class="product-color-red"></span></a>
+                                        </li>
+                                        <li>
+                                          <a href="#" data-color="Yellow"><span class="product-color-yellow"></span></a>
+                                        </li>
+                                        <li class="active">
+                                          <a href="#" data-color="White"><span class="product-color-white"></span></a>
+                                        </li>
+                                        <li>
+                                          <a href="#" data-color="Orange"><span class="product-color-orange"></span></a>
+                                        </li>
+                                        <li>
+                                          <a href="#" data-color="Cyan"><span class="product-color-cyan"></span></a>
+                                        </li>
+                                        <li>
+                                          <a href="#" data-color="Green"><span class="product-color-green"></span></a>
+                                        </li>
+                                        <li>
+                                          <a href="#" data-color="Purple"><span class="product-color-purple"></span></a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <div class="attr-detail attr-size">
+                                      <strong class="mr-10">Size</strong>
+                                      <ul class="list-filter size-filter font-small">
+                                        <li><a href="#">S</a></li>
+                                        <li class="active"><a href="#">M</a></li>
+                                        <li><a href="#">L</a></li>
+                                        <li><a href="#">XL</a></li>
+                                        <li><a href="#">XXL</a></li>
+                                      </ul>
+                                    </div>
+                                    <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                                    <div class="detail-extralink">
+                                      <div class="detail-qty border radius">
+                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                        <span class="qty-val">1</span>
+                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                      </div>
+                                      <div class="product-extra-link2">
+                                         <button type="submit" onclick="addto_cart(`<%=response1._id%>`)" class="button button-add-to-cart">
+                                         AddtoCart
+                                        </button> 
+                                        <!-- <a href="/add-to-cart/<%=response1._id%>" type="submit" onclick="addto_cart(prodId)" class="button button-add-to-cart">Add</a> -->
+                                        <a aria-label="Add To Wishlist" class="action-btn hover-up"
+                                          href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                        <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i
+                                            class="fi-rs-shuffle"></i></a>
+                                      </div>
+                                    </div>
+                                    <ul class="product-meta font-xs color-grey mt-50">
+                                      <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
+                                      <li class="mb-5">
+                                        Tags: <a href="#" rel="tag">Cloth</a>,
+                                        <a href="#" rel="tag">Women</a>,
+                                        <a href="#" rel="tag">Dress</a>
+                                      </li>
+                                      <li>
+                                        Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span>
+                                      </li>
+                                    </ul>
+                                  </div>
+  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+  
+  
+                      <div class="col-lg-3 col-md-4 col-12 col-sm-6 mb-2">
+                        <div class="product-cart-wrap mb-xs-30">
+                          <div class="product-img-action-wrap">
+                            <div class="product-img product-img-zoom">
+                              <a href="shop-product-right.html">
+                                <img class="default-img" src="/uploads/<%= response1.Image[0] %>" alt="" />
+                                <img class="hover-img" src="/uploads/<%= response1.Image[1] %>" alt="" />
+                              </a>
+                            </div>
+                            <div class="product-action-1">
+                              <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal"
+                                data-bs-target="#quickViewModal<%= response1._id %>"><i class="fi-rs-eye"></i></a>
+  
+                              <a aria-label="Add To Wishlist" class="action-btn hover-up" href=""><i
+                                  class="fi-rs-heart"></i></a>
+  
+                            </div>
+                          </div>
+                          <div class="product-content-wrap">
+                            <div class="product-category">
+                              <a href="shop-grid-right.html">Shoes</a>
+                            </div>
+                            <h2>
+                              <a href="#">
+                                <%=response1.Productname%>
+                              </a>
+                            </h2>
+                            <small>
+                              <%=response1.ProductDescription%>
+                            </small>
+  
+                            <div class="product-price">
+                              <span>₹<%=response1.Price%></span>
+                              <span class="old-price">₹<%=response1.Price%></span>
+                            </div>
+                            <div class="product-action-1 show">
+                              <a aria-label="Add To Cart" class="action-btn hover-up"  onclick="addto_cart('<%=response1._id%>')"><i
+                                  class="fi-rs-shopping-bag-add"></i></a>
+  
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <% }) %>
+                    
+  
+  
+                  </div>
+  
+                </div>
+  
+  
+  
+              </div>
+            
+            </div>
+          </section>
+  
+          <section class="mb-50">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <div class="banner-bg wow fadeIn animated"
+                    style="background-image: url('https://ichef.bbci.co.uk/news/976/cpsprodpb/B9FF/production/_117751674_satan-shoes1.jpg')">
+                    <div class="banner-content">
+                      <h5 class="text-grey-4 mb-15">Shop Today’s Deals</h5>
+                      <h2 class="fw-600">
+                        Happy <span class="text-brand"></span>. Big Sale
+                        Up to 40%
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+  
+    </main>
+    <footer class="main">
+  
+      <section class="section-padding footer-mid">
+        <div class="container pt-15 pb-20">
+          <div class="row">
+            <div class="col-lg-4 col-md-6">
+              <div class="widget-about font-md mb-md-5 mb-lg-0">
+                <div class="logo logo-width-1 wow fadeIn animated">
+                  <a href="index.html"><img
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuMOAOWJhCfHxXF-a-MRzBNvMydKInecaP-p-8nbRv3A&usqp=CAU&ec=48600113"
+                      alt="logo" /></a>
+                </div>
+                <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">
+                  Contact
+                </h5>
+                <p class="wow fadeIn animated">
+                  <strong>Address: </strong>562 Wellington Road, Street 32, San
+                  Francisco
+                </p>
+                <p class="wow fadeIn animated">
+                  <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
+                </p>
+                <p class="wow fadeIn animated">
+                  <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
+                </p>
+                <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">
+                  Follow Us
+                </h5>
+                <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
+                  <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt="" /></a>
+                  <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt="" /></a>
+                  <a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt="" /></a>
+                  <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt="" /></a>
+                  <a href="#"><img src="assets/imgs/theme/icons/icon-youtube.svg" alt="" /></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-3">
+              <h5 class="widget-title wow fadeIn animated">About</h5>
+              <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Delivery Information</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms &amp; Conditions</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Support Center</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-2 col-md-3">
+              <h5 class="widget-title wow fadeIn animated">My Account</h5>
+              <ul class="footer-list wow fadeIn animated">
+                <li><a href="#">Sign In</a></li>
+                <li><a href="#">View Cart</a></li>
+                <li><a href="#">My Wishlist</a></li>
+                <li><a href="#">Track My Order</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Order</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-4">
+              <h5 class="widget-title wow fadeIn animated">Install App</h5>
+              <div class="row">
+                <div class="col-md-8 col-lg-12">
+                  <p class="wow fadeIn animated">From App Store or Google Play</p>
+                  <div class="download-app wow fadeIn animated">
+                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active" src="assets/imgs/theme/app-store.jpg"
+                        alt="" /></a>
+                    <a href="#" class="hover-up"><img src="assets/imgs/theme/google-play.jpg" alt="" /></a>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
+                  <p class="mb-20 wow fadeIn animated">
+                    Secured Payment Gateways
+                  </p>
+                  <img class="wow fadeIn animated" src="assets/imgs/theme/payment-method.png" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container pb-20 wow fadeIn animated">
+        <div class="row">
+          <div class="col-12 mb-20">
+            <div class="footer-bottom"></div>
+          </div>
+          <div class="col-lg-6">
+            <p class="float-md-left font-sm text-muted mb-0">
+              &copy; 2021, <strong class="text-brand">Evara</strong> - HTML
+              Ecommerce Template
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <p class="text-lg-end text-start font-sm text-muted mb-0">
+              Designed by
+              <a href="http://alithemes.com/" target="_blank">Alithemes.com</a>.
+              All rights reserved
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+  </section>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+  <script>
+    function addtoCart() {
+  
+      swal("Good job!", "Your product added to cart!", "success");
+    }
+  </script>
+  
+  <script>
+    function addto_cart(proId){
+      $.ajax({
+        url:'/add-to-cart/'+proId,
+        method:'get',
+        success:(response)=>{
+          if(response.status){
+            swal("Good job!", "Your product added to cart!", "success");
+         let count=$('#cart-count').html()
+         count=parseInt(count)+1
+         $('#cart-count').html(count)
+  
+          }
+   
+        }
+      })
+    }
+  
+  </script>
+  

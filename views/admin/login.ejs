@@ -1,7 +1,5 @@
- 
-
-   <section class="vh-100" style="background-color: #bfcce8;">
-    <form action="/admin/login" method="post" class="">
+<section class="vh-100" style="background-color: #bfcce8;">
+  <form action="/admin/login" method="post" class="" >
     <div class="container py-5 pl-3 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100 ">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -13,17 +11,16 @@
                 <p style="color: red;"><%= locals.adminloginErr%></p>
                 <%}%>
   
-               <div class="form-outline mb-4">
-                <input type="email" id="form2Example1" name="email" class="form-control form-control-lg" />
+              <div class="form-outline mb-4">
+                <input type="email" id="form2Example1" name="email" class="form-control form-control-lg"  onkeyup="validateEmail()" required />
                 <label class="form-label" for="form2Example1">Email</label>
+                <div id="email-error" class="text-danger"></div>
               </div>
   
               <div class="form-outline mb-4">
-                <input type="password" id="form2Example2" name="password" class="form-control form-control-lg" />
+                <input type="password" id="form2Example2" name="password" class="form-control form-control-lg" required />
                 <label class="form-label" for="form2Example2">Password</label>
               </div>
-  
-             
   
               <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
   
@@ -35,17 +32,19 @@
       </div>
     </div>
   </form>
-  </section> 
- 
+</section> 
 
-
-
-
-
-
-
-
-
-
-
- 
+<script>
+  function validateEmail() {
+    const emailInput = document.getElementById('form2Example1');
+    const emailError = document.getElementById('email-error');
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(emailInput.value)) {
+      emailError.innerHTML = 'Please enter a valid email address';
+      return false;
+    } else {
+      emailError.innerHTML = '';
+      return true;
+    }
+  }
+</script>

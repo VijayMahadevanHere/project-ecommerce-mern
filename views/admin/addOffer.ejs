@@ -1,0 +1,74 @@
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+    }
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    h1 {
+        text-align: center;
+        margin-top: 50px;
+    }
+    label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    input[type="text"],
+    textarea,
+    input[type="date"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        font-size: 16px;
+        resize: vertical;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    input[type="submit"]:hover {
+        background-color: #3e8e41;
+    }
+    .btn-success {
+margin-top: 10px; /* adjust the margin-top value as per your requirement */
+margin-right:320px
+}
+
+</style>
+
+
+<body>
+<h1>Add Offer</h1>
+
+<a href ="/admin/view-coupon"  style="float: right;" class="btn btn-success">Coupons</a>
+ 
+<form action="/admin/apply_offer/<%= locals.cate._id%>" method="post">
+    
+
+    <label for="coupon-price">Offer Price</label>
+    <input id="" name="Category" type="text" value="<%= locals.cate.CategoryName%>"></div>
+    <input type="number" name="Price"><br>
+    
+   
+
+    <input class="mt-2" type="submit" value="Submit">
+</form>
+</body>
+

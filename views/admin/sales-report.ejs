@@ -1,0 +1,124 @@
+<div class="main_container container">
+  <% if(Details.length==0){%>
+   <div class="d-flex justify-content-center align-items-center">
+     <h2 class="">No Orders Available</h2>
+   </div>
+   <%}else{%>
+
+   <div class="d-flex justify-content-center m-4">
+ 
+       <button type="button" class="btn btn-danger btn_print me-3" 
+         id="excelBtn">Download as Excel</button>
+  
+       <button type="button" class="btn btn-primary btn_print" 
+         id="download">Download as PDF</button>
+
+       <form action="/admin/sales_report" method="POST">
+         <div> 
+           <input type="date" name="startdate" id="startdate">
+         </div>
+         <div>
+           <input type="date" name="enddate" id="enddate">
+         </div>
+         <div class="ml-3 my-auto">
+           <button class="btn btn-primary" type="submit">Submit</button>
+         </div>
+       </form>
+  
+   </div>
+
+   <table class="table table-striped" id="container_content">
+     <thead>
+       <tr>
+         <th scope="col">OrderId</th>
+         <th scope="col">User ID</th>
+         <th scope="col">Item ID</th>
+         <th scope="col">Quantity</th>
+         <th scope="col">Price</th>
+         <th scope="col">Payment Method</th>
+         <th scope="col">Delivered Date</th>
+       </tr>
+     </thead>
+     <tbody>
+       <% Details.forEach((order)=>{ %>
+         <tr>
+           <td><%=order.orderId%></td>
+           <td><%=order.userId%></td>
+           <td><%=order.products.product%></td>
+           <td><%=order.products.quantity%></td>
+           <td>₹<%=order.total%></td>
+           <td><%=order.paymentMethod%></td>
+           <td>
+           <% let dateString = order.date; %>
+              <p><%= new Date(dateString).toDateString() %></p>
+              
+         </tr>
+       <%})%>
+       <h5 class="text-right">Total Earnings: &nbsp; 
+         <span class="fw-bold"></span>₹<%=total[0].totalDiscount%>
+       </h5> 
+     </tbody>
+   </table>
+
+  </div>
+  <br>
+  <br>
+  <hr>
+
+  <hr>
+  <%}
+  %>
+
+</div> 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+<script>
+const excelBtn = document.getElementById('excelBtn');
+
+excelBtn.addEventListener('click', () => {
+  // Get the table element
+  const table = document.querySelector('#container_content');
+
+  // Convert the table to a workbook
+  const workbook = XLSX.utils.table_to_book(table);
+
+  // Convert the workbook to a binary string
+  const binaryString = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+
+  // Create a Blob object from the binary string
+  const blob = new Blob([s2ab(binaryString)], { type: 'application/octet-stream' });
+
+  // Create a link element to download the file
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = 'sales_report.xlsx';
+  document.body.appendChild(link);
+
+  // Click the link to start the download
+  link.click();
+
+  // Remove the link from the DOM
+  document.body.removeChild(link);
+});
+
+// Helper function to convert a string to an ArrayBuffer
+function s2ab(s) {
+  const buf = new ArrayBuffer(s.length);
+  const view = new Uint8Array(buf);
+  for (let i = 0; i < s.length; i++) {
+    view[i] = s.charCodeAt(i) & 0xff;
+  }
+  return buf;
+}
+</script>
+<script>
+  window.onload=function(){
+    document.getElementById('download').addEventListener("click",()=>{
+         let invoice= this. document.getElementById('container_content')
+         
+         html2pdf().from(invoice).save()
+    })
+}
+</script>

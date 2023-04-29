@@ -1,20 +1,22 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+let  createError = require('http-errors');
+let express = require('express');
+let  path = require('path');
+let  cookieParser = require('cookie-parser');
+let  logger = require('morgan');
 const expressLayouts = require("express-ejs-layouts");
 const session= require('express-session')
 const nocache=require('nocache')
+
+
 require('dotenv').config();
 
 //db connection
-const db = require('./model/connection')
 
-var userRouter = require('./routes/user');
-var adminRouter = require('./routes/admin');
 
-var app = express();
+let userRouter = require('./routes/user');
+let adminRouter = require('./routes/admin');
+
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,11 +31,12 @@ app.use(express.static(path.join(__dirname, "public/admin-assets")));
 app.use(session({secret:"key", resave: true,saveUninitialized: true,cookie:{maxAge:600000}}))
 app.use(nocache());
 
+
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(req, res, next) { 
   next(createError(404));
 });
 

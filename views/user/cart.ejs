@@ -1,121 +1,217 @@
-  <section class="h-100 h-custom" style="background-color: #d2c9ff;">
+<section class="h-100 h-custom" style="background-color: #d2c9ff;">
     <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12">
-          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
-            <div class="card-body p-0">
-              <div class="row g-0">
-                <div class="col-lg-8">
-                  <div class="p-5">
-                    
-                    <div class="d-flex justify-content-between align-items-center mb-5">
-                      <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
-                      <h6 class="mb-0 text-muted">3 items</h6>
-                    </div>
-                    <hr class="my-4">
-                    <% products.forEach(function(product) { %>
-                    <div class="row mb-4 d-flex justify-content-between align-items-center">
-                      <div class="col-md-2 col-lg-2 col-xl-2">
-                        <img
-                          src="/uploads/<%= product.proDetails[0].Image[0] %>"
-                          class="img-fluid rounded-3" alt="Cotton T-shirt">
-                      </div>
-                      <div class="col-md-3 col-lg-3 col-xl-3">
-                        <h6 class="text-muted">Shirt</h6>
-                        <h6 class="text-black mb-0">Cotton T-shirt</h6>
-                      </div>
-                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                        <!-- <button class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                          <i class="fas fa-minus"></i>
-                        </button> -->
-  
-                        <button class="cart-item-count mr-3">-</button><%= product.products.quantity %><button class="cart-item-count ml-3">+</button>
-                        <div class="ml-2">
-                          <a href="">Remove</a>
-                        </div>
-                        <!-- <input id="form1" min="0" name="quantity" value="1" type="number"
-                          class="form-control form-control-sm" /> -->
-  
-                        <!-- <button class="btn btn-link px-2"
-                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                          <i class="fas fa-plus"></i>
-                        </button> -->
-                      </div>
-                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                         <h6 class="mb-0"><%= product.proDetails[0].Price %></h6> 
-                        <h6 class="mb-0 product-price"></h6>
-                      </div>
-                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                        <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
-                      </div>
-                    </div>
-                    <% }); %>
-                 
-  
-                   
-  
-                    <hr class="my-4">
-  
-                    <div class="pt-5">
-                      <h6 class="mb-0"><a href="/" class="text-body"><i
-                            class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 bg-grey">
-                  <div class="p-5">
-                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
-                    <hr class="my-4">
-  
-                    <div class="d-flex justify-content-between mb-4">
-                      <h5 class="text-uppercase">items 3</h5>
-                      <h5>€ 132.00</h5>
-                    </div>
-  
-                    <h5 class="text-uppercase mb-3">Shipping</h5>
-  
-                    <div class="mb-4 pb-2">
-                      <select class="select">
-                        <option value="1">Standard-Delivery- €5.00</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                        <option value="4">Four</option>
-                      </select>
-                    </div>
-  
-                    <h5 class="text-uppercase mb-3">Give code</h5>
-  
-                    <div class="mb-5">
-                      <div class="form-outline">
-                        <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                        <label class="form-label" for="form3Examplea2">Enter your code</label>
-                      </div>
-                    </div>
-  
-                    <hr class="my-4">
-  
-                    <div class="d-flex justify-content-between mb-5">
-                      <h5 class="text-uppercase">Total price</h5>
-                      <h5>€ 137.00</h5>
-                    </div>
-  
-                    <button type="button" class="btn btn-dark btn-block btn-lg"
-                      data-mdb-ripple-color="dark">Register</button>
-  
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> 
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-8">
+                                <div class="p-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-5">
+                                        <h1 class="fw-bold mb-0 text-black">
+                                            Shopping Cart </h1>
+                                            <h6 class="mb-0 text-muted">
+                                                <%= cartCount %>
+                                                Items
+                                            </h6>
+                                        </div>
+                                        <hr class="my-4">
+                                            <% products.forEach(function(product) { %>
+                                                <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                                        <img src="/uploads/<%= product.proDetails.Image[0] %>" class="img-fluid rounded-3" alt="Cotton T-shirt"></div>
+                                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                                            <h6 class="text-muted">
+                                                                <%=product.proDetails.Productname%>
+                                                            </h6>
+                                                            <h6 class="text-black mb-0">
+                                                                <%=product.proDetails.ProductDescription%>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                                            <% if (product.products.quantity > 1) { %>
+                                                              <button class="btn btn-dark ml-2 mr-2 btn-minus" onclick="cartQuantity('<%= product._id %>','<%= product.proDetails._id%>','<%= locals.userId %>', -1)">
+                                                                -
+                                                              </button>
+                                                            <% } else { %>
+                                                              <button class="btn btn-dark ml-2 mr-2 btn-minus d-none" onclick="cartQuantity('<%= product._id %>','<%= product.proDetails._id%>','<%= locals.userId %>', -1)">
+                                                                -
+                                                              </button>
+                                                            <% } %>
+                                                            <span id="qty<%= product.proDetails._id%>">
+                                                              <%= product.products.quantity %>
+                                                            </span>
+                                                            <button class="btn btn-dark ml-2 mr-2" onclick="cartQuantity('<%= product._id %>','<%= product.proDetails._id%>','<%= locals.userId %>', 1)">
+                                                              +
+                                                            </button>
+                                                            <button type="button" class="btn btn-dark ml-2 mr-3" onclick="cartRemove('<%= product._id %>','<%= product.proDetails._id%>')">
+                                                              Remove
+                                                            </button>
+                                                          </div>
+                                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                                            <h6 id="" class="ml-4">
+                                                                <%= product.proDetails.Price %>
+                                                            </h6>
+                                                            <h6 class="mb-0 product-price"></h6>
+                                                        </div>
+                                                    </div>
+                                                <% }); %>
 
 
+                                                <hr class="my-4">
+
+                                                    <div class="pt-5">
+                                                        <h6 class="mb-0">
+                                                            <a href="/" class="text-body">
+                                                                <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 bg-grey">
+                                                <div class="p-5">
+                                                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                                                    <hr class="my-4">
+
+                                                        <div class="d-flex justify-content-between mb-4">
+                                                            <h5 class="text-uppercase">items
+                                                                <%= cartCount %>
+                                                            </h5>
+
+                                                        </div>
 
 
- 
+                                                        <h5 class="text-uppercase mb-3">Give code</h5>
 
-   <!-- views/cart.ejs -->
+                                                        <div class="mb-5">
+                                                            <div class="form-outline">
+                                                                <input type="text" id="coupon-code" class="form-control form-control-lg"/>
+                                                                <label class="form-label" for="coupon-code">Enter your code</label>
+                                                            </div>
+                                                            <button type="button" class="btn btn-secondary btn-lg" onclick="applyCoupon()">Apply coupon</button>
+
+                                                        </div>
+
+                                                        <hr class="my-4">
+
+                                                            <div class="d-flex justify-content-between mb-5">
+                                                                <h5 class="text-uppercase">Total price</h5>
+                                                                <span>₹
+                                                                </span>
+                                                                <h5>
+                                                                    <span id="total">
+                                                                        <%=locals.totalAmount[0].total%>
+                                                                    </span>
+                                                                </h5>
+                                                                <span id="status" style="color: green;"></span>
+                                                                <span id="notstatus" style="color: rgb(228, 16, 41);"></span>
+                                                                <input hidden id="raw-total" type="text" value="<%= locals.totalAmount[0].total%>"></div>
+
+                                                                <a href="/place-order" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Place Order</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <!-- views/cart.ejs -->
+
+
+                            
+                            <script>
+                                function cartQuantity(cartId, prodId, userId, count) {
+                                  let quantity = parseInt(document.getElementById('qty' + prodId).innerText)
+                                  $.ajax({
+                                    url: '/change-product-quantity',
+                                    data: {
+                                      cart: cartId,
+                                      product: prodId,
+                                      count: count,
+                                      userId: userId,
+                                      quantity: quantity
+                                    },
+                                    method: 'post',
+                                    success: (response) => {
+                                      if (response.removeProduct) {
+                                        alert('product removed ')
+                                        location.reload()
+                                      } else {
+                                        document.getElementById('qty' + prodId).innerText = quantity + count
+                                        document.getElementById('total').innerText = response.total[0].total
+                                
+                                        // Show/hide minus button based on quantity
+                                        if (quantity + count < 2) {
+                                          document.querySelector(`#${prodId} .btn-minus`).classList.add('d-none')
+                                        } else {
+                                          document.querySelector(`#${prodId} .btn-minus`).classList.remove('d-none')
+                                        }
+                                      }
+                                    }
+                                  })
+                                }
+                                </script>
+
+                            <script>
+                                function cartRemove(cartId, prodId) {
+
+                                    $.ajax({
+                                        url: '/remove-cart-item',
+                                        data: {
+                                            cart: cartId,
+                                            product: prodId
+
+                                        },
+                                        method: 'post',
+                                        success: (response) => {
+
+                                            if (response) {
+
+                                                alert('product removed ')
+                                                location.reload()
+                                            }
+
+                                        }
+
+                                    })
+
+
+                                }
+                            </script>
+                            <script>
+                                function applyCoupon() { // Get the coupon code from the input field
+                                    const couponCode = document.getElementById("coupon-code").value;
+                                    const total = document.getElementById("raw-total").value;
+
+
+                                    // Make an AJAX call to the s
+
+
+                                    $.ajax({
+                                        url: '/apply-coupon',
+                                        type: 'post',
+                                        data: {
+                                            couponCode,
+                                            total
+
+
+                                        },
+                                        success: (response) => {
+                                            if (response.status) {
+
+                                                document.getElementById('total').innerHTML = response.discountedPrice
+                                                document.getElementById('status').innerHTML = 'Redeemed'
+
+
+                                            } else {
+                                                document.getElementById('notstatus').innerText = 'Not Redeemed'
+
+                                            }
+                                        }
+                                    })
+                                }
+                            </script>

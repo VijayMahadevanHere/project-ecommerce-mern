@@ -1,5 +1,3 @@
-
-
 <header class="main-header navbar">
   <div class="col-search">
     <form class="searchform">
@@ -23,15 +21,11 @@
     </form>
   </div>
   <div class="col-nav">
-    
     <ul class="nav">
-     
-
-   
       <% if (adminStatus==true) { %>
-        
-        <li class="dropdown nav-item">
-          <a
+
+      <li class="dropdown nav-item">
+        <a
           class="dropdown-toggle"
           data-bs-toggle="dropdown"
           href="#"
@@ -40,29 +34,23 @@
         >
           <img
             class="img-xs rounded-circle"
-            src="/imgs/people/avatar2.jpg"
+            src="/imgs/people/avatar2.jpg "
             alt="User"
         /></a>
         <div
           class="dropdown-menu dropdown-menu-end"
           aria-labelledby="dropdownAccount"
         >
-
-          <a class="dropdown-item text-danger" href="/admin/logout"
-            ><i class="material-icons md-exit_to_app"></i>Logout</a
+          <a class="dropdown-item text-danger" href="/admin/logout">
+            <i class="material-icons md-exit_to_app"> </i>Logout</a
           >
-          
         </div>
-          
-          <%} else { %>
-            <a class="dropdown-item text-success" href="/admin/login"
-            ><i class="material-icons md-enter_to_app"></i>Login</a
-          >
-            
-          <% } %>
-       
+        <%} else { %>
+        <a class="dropdown-item text-success" href="/admin/login">
+          <i class="material-icons md-enter_to_app"> </i>Login</a
+        >
+        <% } %>
       </li>
     </ul>
   </div>
-</header> 
- 
+</header>

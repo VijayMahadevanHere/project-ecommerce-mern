@@ -1,0 +1,77 @@
+
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f0f0f0;
+		}
+		form {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 5px;
+			box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+			max-width: 500px;
+			margin: 0 auto;
+		}
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+		}
+		label {
+			display: block;
+			margin-top: 10px;
+			font-weight: bold;
+		}
+		input[type="text"],
+		textarea,
+		input[type="date"] {
+			width: 100%;
+			padding: 10px;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+			margin-bottom: 20px;
+			font-size: 16px;
+			resize: vertical;
+		}
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		input[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+		.btn-success {
+    margin-top: 10px; /* adjust the margin-top value as per your requirement */
+	margin-right:320px
+}
+
+	</style>
+	
+
+<body>
+	<h1>Add Coupon</h1>
+	<a href ="/admin/view-coupon"  style="float: right;" class="btn btn-success">Coupons</a>
+	 
+	<form action="/admin/coupon" method="post">
+		<label for="coupon-name">Coupon Name:</label>
+		<input type="text" id="coupon-name" name="coupon-name" placeholder="Enter coupon name"><br>
+
+		<label for="coupon-price">Coupon Price:</label>
+        <input type="number" id="coupon-price" name="coupon-price"><br>
+
+        <label for="coupon-description">Coupon Discription:</label>
+		<textarea id="coupon-description" name="coupon-description" placeholder="Enter coupon-description "></textarea><br>
+
+		<label for="coupon-date">Coupon Expiry Date:</label>
+		<input type="date" id="coupon-date" name="coupon-date"><br>
+
+		<input type="submit" value="Submit">
+	</form>
+</body>
+

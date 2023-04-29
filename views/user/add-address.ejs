@@ -1,0 +1,332 @@
+<section class="mt-50 mb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-25">
+            <h4>Add Address</h4>
+          </div>
+          <form action="/add_address" method="post" id="form">
+            <div class="form-group">
+              <input
+                type="text"
+                required=""
+                name="fname"
+                id="fname"
+                onkeyup="validateFirstName()"
+                placeholder="First name *"
+              />
+              <span id="fname-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                required=""
+                name="lname"
+                id="lname"
+                onkeyup="validateLastName()"
+                placeholder="Last name *"
+              />
+              <span id="lname-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                required=""
+                type="text"
+                name="street"
+                id="street"
+                onkeyup="validateStreet()"
+                placeholder="Street Name"
+              />
+              <span id="street-error" class="validation-label"></span>
+            </div>
+  
+            <div class="form-group">
+              <input
+                type="text"
+                name="apartment"
+                required=""
+                id="apartment"
+                onkeyup="validateApartment()"
+                placeholder="Apartment *"
+              />
+              <span id="apartment-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="city"
+                required=""
+                placeholder="City"
+                id="city"
+                onkeyup="validateCity()"
+              />
+              <span id="city-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                required=""
+                type="text"
+                name="state"
+                placeholder="State"
+                id="state"
+                onkeyup="validateState()"
+              />
+              <span id="state-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                required=""
+                type="text"
+                name="pincode"
+                placeholder="Pincode"
+                id="pin"
+                onkeyup="validatePin()"
+              />
+              <span id="pin-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                required=""
+                type="text"
+                name="mobile"
+                placeholder="Mobile"
+                id="phone"
+                onkeyup="validatePhone()"
+              />
+              <span id="phone-error" class="validation-label"></span>
+            </div>
+            <div class="form-group">
+              <input
+                required=""
+                type="text"
+                name="email"
+                placeholder="email"
+                id="email"
+                onkeyup="validateEmail()"
+              />
+              <span id="email-error" class="validation-label"></span>
+            </div>
+            <button class="btn btn-dark">Continue</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    const fnameError = document.getElementById('fname-error');
+    const lnameError = document.getElementById('lname-error');
+    const emailError = document.getElementById('email-error');
+    const phoneError = document.getElementById('phone-error');
+    const streetError = document.getElementById('street-error');
+    const pinError = document.getElementById('pin-error');
+    const cityError = document.getElementById('city-error');
+    const apartmentError = document.getElementById('apartment-error');
+    const stateError = document.getElementById('state-error');
+    const formError = document.getElementById('form-error');
+    const form = document.getElementById('form');
+    function validateFirstName() {
+      const fname = document.getElementById('fname').value;
+      const fnameInput = document.getElementById('fname');
+      if (fname.length == 0) {
+        fnameError.innerHTML = 'Name is required';
+        fnameError.style.color = 'red';
+        fnameInput.style.border = 'solid 2px red';
+        return false;
+      }
+      if (!fname.match(/^[A-Za-z]{3,}$/)) {
+        fnameError.innerHTML = 'Write valid name';
+        fnameError.style.color = 'red';
+        fnameInput.style.border = 'solid 2px red';
+        return false;
+      }
+      fnameError.innerHTML = '';
+      
+      fnameError.style.color = 'green';
+      fnameInput.style.border = 'solid 2px green';
+      return true;
+    }
+    function validateLastName() {
+      const lname = document.getElementById('lname').value;
+      const lnameInput = document.getElementById('lname');
+      if (lname.length == 0) {
+        lnameError.innerHTML = 'Name is required';
+        lnameError.style.color = 'red';
+        lnameInput.style.border = 'solid 2px red';
+        return false;
+      }
+      if (!lname.match(/^[A-Za-z]{3,}$/)) {
+        lnameError.innerHTML = 'Write valid name';
+        lnameError.style.color = 'red';
+        lnameInput.style.border = 'solid 2px red';
+        return false;
+      }
+      lnameError.innerHTML = '';
+
+      lnameError.style.color = 'green';
+      lnameInput.style.border = 'solid 2px green';
+      return true;
+    }
+    function validateStreet() {
+      const street = document.getElementById('street').value;
+      const streetInput = document.getElementById('street');
+      if (street.length == 0) {
+        streetError.innerHTML = 'Street name is required';
+        streetError.style.color = 'red';
+        streetInput.style.border = 'solid 2px red';
+        return false;
+      }
+      if (!street.match(/^[A-Za-z]{3,}$/)) {
+        streetError.innerHTML = 'Write valid Street name';
+        streetError.style.color = 'red';
+        streetInput.style.border = 'solid 2px red';
+        return false;
+      }
+      streetError.innerHTML = '';
+
+      streetError.style.color = 'green';
+      streetInput.style.border = 'solid 2px green';
+      return true;
+    }
+    function validateApartment() {
+      const apartment = document.getElementById('apartment').value;
+      const apartmentInput = document.getElementById('apartment');
+      if (apartment.length == 0) {
+        apartmentError.innerHTML = 'Apartment name is required';
+        apartmentError.style.color = 'red';
+        apartmentInput.style.border = 'solid 2px red';
+        return false;
+      }
+      if (!apartment.match(/^[A-Z a-z]{3,}$/)) {
+        apartmentError.innerHTML = 'Write valid apartment name';
+        apartmentError.style.color = 'red';
+        apartmentInput.style.border = 'solid 2px red';
+        return false;
+      }
+      apartmentError.innerHTML = '';
+     
+      apartmentError.style.color = 'green';
+      apartmentInput.style.border = 'solid 2px green';
+      return true;
+    }
+    function validateCity() {
+      const city = document.getElementById('city').value;
+      const cityInput = document.getElementById('city');
+      if (city.length == 0) {
+        cityError.innerHTML = 'city name is required';
+        cityError.style.color = 'red';
+        cityInput.style.border = 'solid 2px red';
+        return false;
+      }
+      if (!city.match(/^[A-Za-z]{3,}$/)) {
+        cityError.innerHTML = 'Write valid city name';
+        cityError.style.color = 'red';
+        cityInput.style.border = 'solid 2px red';
+        return false;
+      }
+      cityError.innerHTML = '';
+      // fnameError.innerHTML = "Valid Name";
+      cityError.style.color = 'green';
+      cityInput.style.border = 'solid 2px green';
+      return true;
+    }
+    function validateState() {
+      const state = document.getElementById('state').value;
+      const stateInput = document.getElementById('state');
+      if (state.length == 0) {
+        stateError.innerHTML = 'state name is required';
+        stateError.style.color = 'red';
+        stateInput.style.border = 'solid 2px red';
+        return false;
+      }
+      if (!state.match(/^[A-Za-z]{3,}$/)) {
+        stateError.innerHTML = 'Write valid state name';
+        stateError.style.color = 'red';
+        stateInput.style.border = 'solid 2px red';
+        return false;
+      }
+      stateError.innerHTML = '';
+   
+      stateError.style.color = 'green';
+      stateInput.style.border = 'solid 2px green';
+      return true;
+    }
+    function validateEmail() {
+      const email = document.getElementById('email').value;
+      const emailInput = document.getElementById('email');
+      if (email.length == 0) {
+        emailError.innerHTML = 'Email is required';
+        emailError.style.color = 'red';
+        emailInput.style.border = 'solid 2px red';
+        return false;
+      }
+      if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+        emailError.innerHTML = 'Email invalid';
+        emailError.style.color = 'red';
+        emailInput.style.border = 'solid 2px red';
+        return false;
+      }
+      emailError.innerHTML = '';
+      emailError.style.color = 'green';
+      emailInput.style.border = 'solid 2px green';
+      return true;
+    }
+    function validatePin() {
+      const pin = document.getElementById('pin').value;
+      const pinInput = document.getElementById('pin');
+      if (pin.length == 0) {
+        pinError.innerHTML = 'pin number is required';
+        pinError.style.color = 'red';
+        pinInput.style.border = 'solid 2px red';
+        return false;
+      }
+      if (!pin.match(/^\d{6}$/)) {
+        pinError.innerHTML = 'Enter valid number';
+        pinError.style.color = 'red';
+        pinInput.style.border = 'solid 2px red';
+        return false;
+      }
+      pinError.innerHTML = '';
+      pinError.style.color = 'green';
+      pinInput.style.border = 'solid 2px green';
+      return true;
+    }
+    function validatePhone() {
+      const phone = document.getElementById('phone').value;
+      const phoneInput = document.getElementById('phone');
+      if (phone.length == 0) {
+        phoneError.innerHTML = 'phone number is required';
+        phoneError.style.color = 'red';
+        phoneInput.style.border = 'solid 2px red';
+        return false;
+      }
+      if (!phone.match(/^\d{10}$/)) {
+        phoneError.innerHTML = 'Enter valid number';
+        phoneError.style.color = 'red';
+        phoneInput.style.border = 'solid 2px red';
+        return false;
+      }
+      phoneError.innerHTML = '';
+      phoneError.style.color = 'green';
+      phoneInput.style.border = 'solid 2px green';
+      return true;
+    }
+  
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (
+        !validateFirstName() ||
+        !validateLastName() ||
+        !validateEmail() ||
+        !validatePhone()
+      ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Enter details correctly!!',
+        });
+        return false;
+      } else {
+        form.submit();
+      }
+    });
+  </script>
