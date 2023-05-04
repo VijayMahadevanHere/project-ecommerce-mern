@@ -56,14 +56,16 @@
                     <div class="mb-25">
                         <h4>Billing Details</h4>
                     </div>
-                    <button type="button" class="btn btn-dark mb-2" data-toggle="modal" data-target="#exampleModal">
-                        Add address
-                    </button>
+
+                   
+                   <a href="/new_address" class="btn btn-dark">Add Address</a>
+                 
+                    <% if (address!==0) { %>
                     <% address.forEach(function(address) { %>
                      <div class="form-check">
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
-                                <input class="form-check-input" type="radio" value="<%=address._id%>" name="address" >
+                                <input class="form-check-input" type="radio" value="<%=address._id%>" name="address" checked>
                                
                               
                                 <h5 class="card-title"><%=address.fname%></h5>
@@ -78,6 +80,7 @@
                         </div>
                     </div>
                     <% }) %>
+                    <% } %>
                 </div>
                  <div class="col-md-4" style="float: left;">
                     <div class="container mt-5 ml-5 checkout"
@@ -94,13 +97,19 @@
                             <label class="radio-inline mt-2">
                                 <input type="radio" name="payment-method" value="ONLINE">Online Payment
                             </label>
+                            <% if ( wallet) { %>
                             <% if (totalAmount[0].total < wallet.Amount) { %>
                                 <label class="radio-inline mt-2">
                                     <input type="radio" name="payment-method" value="wallet">WALLET
                                 </label>
                               <% } %>
+                              <% } %>
+                              <% if (address !== 0) { %>
+                                <button type="submit" class="btn btn-dark ml-2 mr-2">Checkout</button>
+                              <% } else { %>
+                                <p class="text-muted">Please add an address before proceeding to checkout.</p>
+                              <% } %>
                               
-                            <button type="submit" class=" btn btn-dark ml-2 mr-2" >Checkout</button>
                         </div>
                     </div>
                 </div>

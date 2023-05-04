@@ -31,8 +31,15 @@
                      <a href="/orderDetails/<%=orders._id%>" class="btn btn-primary" style="font-family: Arial, sans-serif; font-size: 14px;">Order Details</a>
                     </td>
                     <td>
+                    <% if (orders.status==='canceled')  {%>
+                        <a href="" class="btn btn-xs disabled" style="background-color: rgb(228, 24, 24);">
+                            Cancelled Order</a>
+                    
+                       <%} else if(orders.status!=='returned') { %>
                         <a class="btn btn-danger delete-btn  " data-id="<%=orders._id%>">Cancel</a>
-                       
+                          <% }  else if(orders.status==='returned') { %>
+                            <a class="btn btn-secondary disabled  ">Returned</a>
+                          <%}%>
                     </td>
                 </tr>
                 <tr class="order-separator">

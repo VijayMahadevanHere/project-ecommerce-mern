@@ -120,7 +120,10 @@ const couponSchema = new mongoose.Schema({
   Discription:{
     type:String
   }, 
-   Date:{
+   startDate:{
+    type:String
+  },
+  endDate:{
     type:String
   }
 })

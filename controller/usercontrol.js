@@ -1,7 +1,6 @@
 const FaxResponse = require("twilio/lib/twiml/FaxResponse");
 const {response} = require("../app");
 const userhelpers = require("../helpers/userHelpers");
-const moment = require('moment');
 const db = require('../model/connection');
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOCKEN;
@@ -43,8 +42,8 @@ module.exports = {
             } else {
                 res.render('user/login', {loginStatus, blockedStatus, login: false})
 
-                console.log(blockedStatus + 'blocked status');
-                console.log(loginStatus + 'log');
+      
+        
             }
         })
 
@@ -97,7 +96,7 @@ module.exports = {
         } else {
 
             client.verify.v2.services(secret).verifications.create({to: `+91 ${mobileNumber}`, channel: "sms"}).then((verification) => {
-                console.log(verification.status);
+             
 
 
                 res.render("user/postOtpVerify", {mobileNumber});
@@ -115,7 +114,7 @@ module.exports = {
             let user = req.session.user;
             const pageSize = 8
             let response1= response
-          
+           console.log(response1,'thisis ');
        
             let banner = await userhelpers.getViewBanner()
             let Category = await userhelpers.findAllcategories()  
@@ -146,6 +145,8 @@ module.exports = {
             }
 
 
+        }).catch((error)=>{
+            res.status(500)
         })
 
 
@@ -172,7 +173,7 @@ module.exports = {
                 }
             })
         } catch (err) {
-            console.log(err);
+           
             res.render('user/postOtpVerify', {
                 user: true,
                 userMobile,
@@ -224,11 +225,12 @@ module.exports = {
 
 
     },
-    addToCart: (req, res) => {
-
-
-        userhelpers.add_To_Cart(req.session.userDetails._id, req.params.id).then((response) => {
-
+    addToCart: async(req, res) => {  
+      let prod =  await userhelpers.findproduct(req.params.id)
+      let prodprice=prod.Price
+   
+        userhelpers.add_To_Cart(req.session.userDetails._id, req.params.id,prodprice).then((response) => {
+ 
             res.json({status: true})
         }).catch((error)=>{
             res.status(500)
@@ -264,13 +266,18 @@ module.exports = {
         let totalAmount = response
             let userid = req.session.userDetails._id
             let Address= await userhelpers.getAddress(UserId)
-          
-          let address=Address.Address
+            let address
+          if(!Address){
+            address=0
+          }else{
+            address=Address.Address
+          }
+      
             if(totalAmount.length>0){
                
          
             let wallet =   await userhelpers.findWallet(UserId)
-            console.log(wallet,'gotit');
+             
                 res.render('user/order', {totalAmount, userid,UserId,address,wallet})
             }else{
                 res.redirect('/cart')
@@ -290,6 +297,7 @@ module.exports = {
       let discount=0
      if(req.session.discoundPrice){
         discount = req.session.discoundPrice
+        req.session.discoundPrice=0
      } 
           
      
@@ -308,9 +316,6 @@ module.exports = {
             totalAmount = parseInt(totalAmount) - parseInt(discountAmt)
             totalAmount = '' + totalAmount
         
-        }else{
-          
-             totalAmount = totalAmount
         }
         userhelpers.placeOrder(req.body,Address, carts, totalAmount, discount).then((orderID) => {
 
@@ -323,7 +328,7 @@ module.exports = {
                   
                     res.json(response)
                 }).catch((error)=>{
-                    console.log(error)
+                
                     res.status(500,{error})
                 })
             }
@@ -356,11 +361,11 @@ module.exports = {
           
             res.render('user/orderList', {user, cartCount, orders,UserId})
          }).catch((error)=>{
-             console.log(error);
+          
             res.status(500,{error})
          })
      }).catch((error)=>{
-        console.log(error)
+       
         res.status(500,{error})
      })
         
@@ -391,7 +396,7 @@ module.exports = {
                 res.json({status: true})
             })
         }).catch((err) => {
-            console.log('err', err);
+         
             res.json({status: false, errMsg: ''})
         })
     },
@@ -403,21 +408,27 @@ module.exports = {
  
         const {couponCode, total} = req.body
                
-      
-        let discount = await db.coupon.findOne({Name: couponCode})
-
+        try{
+            let discount = await db.coupon.findOne({Name: couponCode})
+             
         if (couponCode === discount.Name) {
-         if(new Date(discount.Date)>new Date()){
-            const discountedPrice = (total - discount.Price).toFixed(2);
-            req.session.discoundPrice = discountedPrice
-            
-            res.json({status: true, discountedPrice}); 
-       }else{
-        res.json({status: false});
-       }
-        } else {
-            res.json({status: false});
+            if(new Date()>= new Date(discount.startDate) && new Date() <= new Date(discount.endDate)){
+               const discountedPrice = (total - discount.Price).toFixed(2);
+               req.session.discoundPrice = discountedPrice
+               
+               res.json({status: true, discountedPrice}); 
+          }else{
+           res.json({dateStatusError:true});
+          }
+           } else {
+               res.json({NameStatusError:true});
+           }
         }
+      
+      catch{
+        res.json({status: false, errMsg: ''})
+      }
+        
     },
     searchProducts: (req, res) => {
         try {
@@ -509,8 +520,9 @@ res.json({ results, pageCount }); // return the paginated data and page count to
   getProfile: async (req, res) => {
     try {
       let data = await userhelpers.findUser(UserId);
-      
-      res.render("user/profile", { data ,UserId});
+      let Address= await userhelpers.getAddress(UserId)
+
+      res.render("user/profile", { data ,UserId,Address});
     } catch (error) {
       res.status(500)
     }
@@ -536,23 +548,30 @@ res.json({ results, pageCount }); // return the paginated data and page count to
       });
   },
   listWishList: async (req, res) => {
-    wishcount = await userhelpers.getWishCount(req.session.user.id)
-  
-    await userhelpers
-      .ListWishList(req.session.user.id)
-      .then((wishlistItems) => {
-       console.log(wishlistItems,'wishoutingg')
 
-        res.render("user/wishlist", {
-          wishlistItems,
-          wishcount,
-          user,
-          UserId
-        })
-      }).catch((error)=>{
-        console.log(error);  
+
+ await userhelpers.getWishCount(req.session.user.id).then(async( wishcount)=>{
+  await userhelpers
+  .ListWishList(req.session.user.id)
+  .then((wishlistItems) => {
+    res.render("user/wishlist", {
+      wishlistItems,
+      wishcount,
+      user,
+      UserId
     })
-  },
+  }).catch((error)=>{
+  
+  })
+  }).catch(()=>{
+    res.render("user/nowishlist")
+  })
+  
+  
+   
+  }
+
+  ,
   deleteWishList: async (req, res) => {
     try {
       await userhelpers.getDeleteWishList(req.body).then((response) => {
@@ -597,8 +616,13 @@ res.json({ results, pageCount }); // return the paginated data and page count to
   },
   getWallet:async(req,res)=>{
      let wallet =  await userhelpers.findWallet(UserId)
-     let walletAmount=wallet.Amount
-   
+ 
+     let walletAmount
+     if(!wallet){
+        walletAmount=0
+     }else{
+     walletAmount=wallet.Amount
+     }
     res.render('user/wallet',{walletAmount,user})
   }
 }

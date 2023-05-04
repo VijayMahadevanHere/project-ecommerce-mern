@@ -1,56 +1,3 @@
-<!-- 
-<h1 style="text-align: center; font-weight: bold; color: green;">Orders</h1>
-
-<div class="container text-center">
-    <div class="table-responsive justify-content-center">
-        <table class="table table-striped mb-0" id="productsTable">
-            <thead>
-                <tr class="text-center">
-                    <th>Order ID</th>
-                    <th>User ID</th>
-                    <th>Date & Time</th>
-                    <th>Order Status</th>
-                    <th>Option</th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                <% orders.forEach(function(orders) { %>
-                <tr class="order-row">
-                    <td>
-                        <p class="text mb-0 small" style="font-family: Arial, sans-serif; font-size: 14px;"><%=orders._id %></p>
-                    </td>
-                    <td>
-                        <p class="text mb-0 small" style="font-family: Arial, sans-serif; font-size: 14px;"><%=orders.userId%></p>
-                    </td>
-                    <td>
-                        <% let dateString = orders.date; %>
-                        <p><%= new Date(dateString).toDateString() %></p>
-                     
-                    </td>
-                    <td>
-                        <p class="text mb-0 small" style="font-family: Verdana, sans-serif; font-size: 14px; color: green;"><%= orders.status %></p>
-                    </td>
-                    <td colspan="6">
-                     
-                       
-                        <h3><%=orders.date %></h3>
-                        <h3></h3>
-                        <h3></h3>
-                        <h3></h3>
-                   
-                    
-                     
-                        <a href="/admin/orderDetails/<%=orders._id %>" class="btn btn-primary mt-25 mb-25" style="font-family: Arial, sans-serif; font-size: 14px;">Order Details</a>
-                    </td>
-                </tr>
-                <tr class="order-separator">
-                    <td colspan="4"></td>
-                </tr>
-                <% }) %>
-            </tbody>
-        </table>
-    </div>
-</div>  -->
 
 
 <style>
@@ -91,8 +38,10 @@
                             <td><a class="fw-bold"><%=orders.orderId %></a></td>
                             <td><%=orders.deleveryDetails.Name %></td>
                             <td>
-                                <%=orders.total %>
-                            </td>
+                                <% const date = new Date(orders.date); %>
+                                <%= `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}` %>
+                              </td>
+                              
                             <td>
                                 ₹<%=orders.total %>
                             </td>
@@ -111,20 +60,21 @@
                             </td>
                           
                             <% if (orders.status=='canceled') { %>
-                            <td>
-                                <a href="" class="btn btn-xs disabled" style="background-color: rgb(228, 24, 24);">
-                                    Cancelled Order</a>
-                            </td>
+                                <td>
+                                    <a href="" class="btn btn-xs disabled" style="background-color: rgb(228, 24, 24);">
+                                        Cancelled Order
+                                    </a>
+                                </td>
+                            <% } else if (orders.status==='shipped'||orders.status==='Placed') { %>
+                                <td>
+                                    <a class="btn btn-danger btn-xs de-btn" data-id="<%=orders._id%>">Cancel</a>
+                                </td>
+                            <% } else if (orders.status==='delivered'||orders.status==='returned') { %>
+                                <td>
+                                    <a class="btn btn-s btn-xs disabled">Cancel</a>
+                                </td>
+                            <% } %>
                             
-                            <%} else { %>
-                            <td>
-                                <a href="" class="btn btn-xs cancelOrder" style="background-color: rgb(228, 24, 24);"
-                                    data-toggle="modal" data-target="#cancelOrder{{this._id}}">
-                                    Cancel Order</a>
-                            </td>
-                            <% } %> 
-
-                           
                             <% if (orders.status==='Placed') { %>
                             
                             <td>
@@ -155,12 +105,11 @@
                             </td>
                            
                             <% } else if (orders.status==='canceled') { %>
-                            <td>
-                                <a href="/admin/shipOrder/<%=orders.orderId%>" class=" btn btn-xs "
-                                    
-                                    style="background-color: rgb(219, 217, 53);">
-                                    Ship Order</a>
-                            </td>
+                                <td>
+                                    <a href="" class="btn btn-xs disabled" style="background-color: rgb(228, 24, 24);">
+                                        Cancelled Order</a>
+                                </td>
+                            
                             <% } %>
                         </tr>
                     
@@ -172,32 +121,24 @@
         </div>
     </section>
 
-
-<!-- Modal cancel order confirmation -->
-
-<div class="modal fade" id="cancelOrder{{this._id}}" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Cancel Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Do you want to cancel this order?
-            </div>
-            <div class="modal-footer">
-                <a href=""><button type="button" class="btn btn-secondary" data-dismiss="modal">No</button></a>
-                <a href="/admin/cancelOrder/{{this._id}}"><button type="button" class="btn btn-primary">Yes</button></a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-<!-- Modal delivery order confirmation -->
+<script>
+    const deleteButtons = document.querySelectorAll('.de-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const productId = event.target.getAttribute('data-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, cancel it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href= `/admin/cancelOrder/${productId}`
+                }
+            });
+        });
+    });
+</script>

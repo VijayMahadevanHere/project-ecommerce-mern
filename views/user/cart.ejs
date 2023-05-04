@@ -88,8 +88,8 @@
                                                                 <input type="text" id="coupon-code" class="form-control form-control-lg"/>
                                                                 <label class="form-label" for="coupon-code">Enter your code</label>
                                                             </div>
-                                                            <button type="button" class="btn btn-secondary btn-lg" onclick="applyCoupon()">Apply coupon</button>
-
+                                                            <button type="button" class="btn btn-secondary btn-lg" onclick="applyCoupon()">Apply coupon</button>                                                            
+                                                            <span id="totaldicount" style="color: #008000;"></span>
                                                         </div>
 
                                                         <hr class="my-4">
@@ -102,8 +102,12 @@
                                                                     <span id="total">
                                                                         <%=locals.totalAmount[0].total%>
                                                                     </span>
+                                                                  
                                                                 </h5>
-                                                                <span id="status" style="color: green;"></span>
+
+                                                                 <s id="strikedout" style="color: red;"></s>
+                                                               
+                                                                <span id="dateErrorStatus" style="color: rgb(28, 25, 185);"></span>
                                                                 <span id="notstatus" style="color: rgb(228, 16, 41);"></span>
                                                                 <input hidden id="raw-total" type="text" value="<%= locals.totalAmount[0].total%>"></div>
 
@@ -137,7 +141,12 @@
                                     },
                                     method: 'post',
                                     success: (response) => {
-                                      if (response.removeProduct) {
+                                        console.log('response',response)
+                                        if(response.stockEmptyStatus){
+                                            alert('Stock is Empty')
+
+                                        }
+                                     else if (response.removeProduct) {
                                         alert('product removed ')
                                         location.reload()
                                       } else {
@@ -183,12 +192,12 @@
                                 }
                             </script>
                             <script>
-                                function applyCoupon() { // Get the coupon code from the input field
+                                function applyCoupon() {
                                     const couponCode = document.getElementById("coupon-code").value;
                                     const total = document.getElementById("raw-total").value;
 
 
-                                    // Make an AJAX call to the s
+                           
 
 
                                     $.ajax({
@@ -204,10 +213,16 @@
                                             if (response.status) {
 
                                                 document.getElementById('total').innerHTML = response.discountedPrice
-                                                document.getElementById('status').innerHTML = 'Redeemed'
+                                              
+                                                document.getElementById('totaldicount').innerHTML = 'Redeemed ₹'+(parseFloat(total)-parseFloat(response.discountedPrice))
+                                                document.getElementById('strikedout').innerHTML = total
 
 
-                                            } else {
+                                            }else if(response.dateStatusError){
+                                                document.getElementById('dateErrorStatus').innerText = "Sorry this coupon is not active"
+                                            }
+                                            
+                                            else {
                                                 document.getElementById('notstatus').innerText = 'Not Redeemed'
 
                                             }

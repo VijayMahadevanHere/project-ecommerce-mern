@@ -1,5 +1,4 @@
 const express = require("express");
-const { getMaxListeners } = require("../app");
 const router = express.Router();
 const adminControl = require("../controller/admincontrol");
 const photoload = require("../multer/multer");
@@ -94,5 +93,10 @@ router.get('/shipOrder/:id',adminControl.shipOrder)
 router.get('/deliverOrder/:id',adminControl.deliverOrder)
 
 
+router.get(
+  "/cancelOrder/:id",
+  adminMiddleware.adminAuth,
+  adminControl.DeleteOrder
+);
 
 module.exports = router;

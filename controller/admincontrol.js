@@ -157,7 +157,7 @@ module.exports = {
     },
     postBanner: (req, res) => {
         let image = req.files.map(files => (files.filename))
-        console.log(image);
+     
 
         adminHelper.postBanner(req.body, image).then((response) => {
             res.redirect('/admin/view-banner')
@@ -256,7 +256,7 @@ module.exports = {
             let procategory = response
            await  adminHelper.editProduct(req.params.id).then((response) => {
                 let editproduct = response
-                    console.log(editproduct,'editproducts');
+                   
 
                 res.render('admin/edit-viewproduct', {
                     layout: "adminLayout",
@@ -275,7 +275,7 @@ module.exports = {
 
 
     post_EditProduct: (req, res) => {
-        console.log(req.body);
+     
         let images = []
         if (!req.files.image1) {
             images.push(req.body.image1)
@@ -307,7 +307,7 @@ module.exports = {
     },
     // delete category
     deleteCategory: (req, res) => {
-        console.log('test', req.params.id);
+      
         adminHelper.delete_Category(req.params.id).then((response) => {
 
 
@@ -367,15 +367,12 @@ module.exports = {
                 date.getSeconds(seconds)
             }`;
         };
-        let report = await adminHelper.getSalesReport()
-  
-   
+        let Details = await adminHelper.getSalesReport()
+       ;   
+      
         let total = await adminHelper.gettotalamout()
         
-        let Details = []
-        report.forEach(orders => {
-            Details.push(orders)
-        })
+      
 
 
         res.render('admin/sales-report', {
@@ -392,7 +389,7 @@ module.exports = {
 
         adminHelper.postReport(req.body).then(async (orderdata) => {
             let total = await adminHelper.getTotalAmount(req.body)
-
+              console.log(total,'tial');
             let Details = [];
             orderdata.forEach(orders => {
                 Details.push(orders)
@@ -424,7 +421,7 @@ module.exports = {
         
         adminHelper.getOrderProd(req.params.id).then((response)=>{
        let products=response
-      
+      console.log(products,'rooooss');
              res.render('admin/orderDetails',{products})
          }).catch((error)=>{
            res.status(500,{error})
@@ -441,7 +438,7 @@ module.exports = {
      const Cate=   req.body.Name
      const Price=   req.body.value
   
-  console.log(Cate);
+
     
  
 },
@@ -470,6 +467,14 @@ shipOrder:(req,res)=>{
 deliverOrder:(req,res)=>{
     adminHelper.deliverOrder(req.params.id).then(()=>{
         res.redirect("/admin/orderList")
+    })
+},
+DeleteOrder:(req,res)=>{
+ 
+    adminHelper.deleteOrder(req.params.id).then(()=>{
+        res.redirect('/admin/orderList')
+    }).catch(()=>{
+        res.status(500)
     })
 }
 }

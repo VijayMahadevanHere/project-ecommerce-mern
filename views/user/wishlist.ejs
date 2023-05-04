@@ -37,19 +37,38 @@
                     <td class="price" data-title="Price">
                       <span> <%=wishlistItems.wishlist[0].Price%> </span>
                     </td>
+                   
+                    
                     <td class="text-center" data-title="Cart">
-                      <button
+                     
+                      <% if (wishlistItems.wishlist[0].Quantity === 0) { %>
+                        <button
                         class="btn btn-sm"
-                        onclick="addtocart('<%=wishlistItems.item%>');Swal.fire({
+                        onclick="Swal.fire({
                           position: 'center',
-                          icon: 'success',
-                          title: 'Product is successfully added to cart',
+                          icon: 'warning',
+                          title: 'Product is out of stock',
                           showConfirmButton: false,
                           timer: 1500
                         })"
                       >
-                        <i class="fi-rs-shopping-bag mr-5"></i>Add to cart
+                        <i style="color: red;"  class="fi-rs-shopping-bag mr-5"></i>Add to cart
                       </button>
+                        <% } else { %>
+                          <button
+                          class="btn btn-sm"
+                          onclick="addtocart('<%=wishlistItems.item%>');Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Product is successfully added to cart',
+                            showConfirmButton: false,
+                            timer: 1000
+                          })"
+                        >
+                          <i class="fi-rs-shopping-bag mr-5"></i>Add to cart
+                        </button>
+                        <% } %>
+                     
                     </td>
                     <td class="action" cartItemss-title="Remove">
                       <button
@@ -87,8 +106,7 @@
       });
     }
     function removeItem(wishlistId, prodId) {
-      console.log(wishlistId);
-      console.log(prodId);
+     
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",

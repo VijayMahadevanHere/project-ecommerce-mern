@@ -13,12 +13,12 @@
     }
 </style>
 
-<aside style="background-color:rgb(246, 247, 248); height: 425px; border-color: black;" class="navbar-aside  float-left " id="offcanvas_aside">
+<aside  class="navbar-aside  float-left " id="offcanvas_aside">
 
 
     <div>
         <form id="sort-form" method="POST" action="/sort">
-            <div class="sort-container">
+            <div class="navbar-aside">
                 <select id="sort-select" name="selectedValue" onchange="this.form.submit()">
                     <option value="">
                         <a href="#">Filter by Price</a>
@@ -68,6 +68,7 @@
                                                     <h1 class="animated fw-900" style="color: crimson; font-size: 84px; margin: 20px 0;">
                                                         <%= banner.Productname %>
                                                     </h1>
+                                                
                                                     <p class="animated" style="color: #fff; font-size: 28px; margin-bottom: 40px;">
                                                         Save more with coupons &amp; up to 70% off
                                                     </p>
@@ -138,36 +139,18 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="social-icons single-share">
-                                                            <ul class="text-grey-5 d-inline-block">
-                                                                <li>
-                                                                    <strong class="mr-10">Share this:</strong>
-                                                                </li>
-                                                                <li class="social-facebook">
-                                                                    <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""/></a>
-                                                                </li>
-                                                                <li class="social-twitter">
-                                                                    <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""/></a>
-                                                                </li>
-                                                                <li class="social-instagram">
-                                                                    <a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""/></a>
-                                                                </li>
-                                                                <li class="social-linkedin">
-                                                                    <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""/></a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                      
                                                     </div>
                                                     <div class="col-md-6 col-sm-12 col-xs-12">
                                                         <div class="detail-info">
                                                             <h3 class="title-detail mt-30">
-                                                                Colorful Pattern Shirts HD450
+                                                                <%= response1.ProductDescription %>
                                                             </h3>
                                                             <div class="product-detail-rating">
                                                                 <div class="pro-details-brand">
                                                                     <span>
                                                                         Brands:
-                                                                        <a href="shop-grid-right.html">Bootstrap</a>
+                                                                        <%= response1.Productname %>
                                                                     </span>
                                                                 </div>
                                                                 <div class="product-rate-cover text-end">
@@ -181,118 +164,62 @@
                                                             <div class="clearfix product-price-cover">
                                                                 <div class="product-price primary-color float-left">
                                                                     <ins>
-                                                                        <span class="text-brand">$120.00</span>
+                                                                        <span class="text-brand">₹ <%= response1.Price %></span>
                                                                     </ins>
-                                                                    <ins>
-                                                                        <span class="old-price font-md ml-15">$200.00</span>
-                                                                    </ins>
-                                                                    <span class="save-price font-md color3 ml-15">25% Off</span>
+                                                                
+                                                                    <span class="save-price font-md color3 ml-15"><%= response1.discountPerCent %> Off</span>
                                                                 </div>
                                                             </div>
                                                             <div class="bt-1 border-color-1 mt-15 mb-15"></div>
-                                                            <div class="short-desc mb-30">
-                                                                <p class="font-sm">
-                                                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                                                                          Aliquam rem officia, corrupti reiciendis minima nisi modi,!
-                                                                </p>
-                                                            </div>
-
-                                                            <div class="attr-detail attr-color mb-15">
-                                                                <strong class="mr-10">Color</strong>
-                                                                <ul class="list-filter color-filter">
-                                                                    <li>
-                                                                        <a href="#" data-color="Red">
-                                                                            <span class="product-color-red"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#" data-color="Yellow">
-                                                                            <span class="product-color-yellow"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="active">
-                                                                        <a href="#" data-color="White">
-                                                                            <span class="product-color-white"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#" data-color="Orange">
-                                                                            <span class="product-color-orange"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#" data-color="Cyan">
-                                                                            <span class="product-color-cyan"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#" data-color="Green">
-                                                                            <span class="product-color-green"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#" data-color="Purple">
-                                                                            <span class="product-color-purple"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="attr-detail attr-size">
-                                                                <strong class="mr-10">Size</strong>
-                                                                <ul class="list-filter size-filter font-small">
-                                                                    <li>
-                                                                        <a href="#">S</a>
-                                                                    </li>
-                                                                    <li class="active">
-                                                                        <a href="#">M</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">L</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">XL</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#">XXL</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
+                                                            
                                                             <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                                             <div class="detail-extralink">
-                                                                <div class="detail-qty border radius">
-                                                                    <a href="#" class="qty-down">
-                                                                        <i class="fi-rs-angle-small-down"></i>
-                                                                    </a>
-                                                                    <span class="qty-val">1</span>
-                                                                    <a href="#" class="qty-up">
-                                                                        <i class="fi-rs-angle-small-up"></i>
-                                                                    </a>
-                                                                </div>
+                                                                <% if (response1.Quantity===0) { %>
+                                                                    <p style="color: red;">out of stock</p>
+                                                                  <% } else { %>
+                                                                     
                                                                 <div class="product-extra-link2">
-                                                                    <button type="submit" onclick="addto_cart(`<%=response1._id%>`)" class="button button-add-to-cart">
-                                                                        AddtoCart
+                                                                    <button type="submit"
+                                                                    class="button button-add-to-cart ml-5" 
+                                                                     onclick="addto_cart(`<%=response1._id%>`) 
+                                                                    
+                                                                     Swal.fire({
+                                                                        position: 'center',
+                                                                        icon: 'success',
+                                                                        title: 'Product is successfully added to Cart',
+                                                                        showConfirmButton: false,
+                                                                        timer: 1500
+                                                                      })"
+                                                                     >
+                                                                        AddtoCart 
                                                                     </button>
+                                                                  <% } %>
+                                                                 
+                                                                    
 
-                                                                    <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html">
-                                                                        <i class="fi-rs-heart"></i>
-                                                                    </a>
-                                                                    <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html">
-                                                                        <i class="fi-rs-shuffle"></i>
-                                                                    </a>
+                                                                    <button 
+                                                      type="submit"
+                                                      aria-label="Add To Wishlist"
+                                                      class="action-btn  btn-sm hover-up  ml-3 "
+                                                      onclick="addToWishlist('<%-response1._id%>')
+                                                    Swal.fire({
+                                                      position: 'center',
+                                                      icon: 'success',
+                                                      title: 'Product is successfully added to wishlist',
+                                                      showConfirmButton: false,
+                                                      timer: 1500
+                                                    })"
+                                                    >
+                                                    <i class="fi-rs-heart"></i>
+                                                    </button>
+                                                                   
                                                                 </div>
                                                             </div>
                                                             <ul class="product-meta font-xs color-grey mt-50">
-                                                                <li class="mb-5">SKU:
-                                                                    <a href="#">FWM15VKT</a>
-                                                                </li>
-                                                                <li class="mb-5">
-                                                                    Tags:
-                                                                    <a href="#" rel="tag">Cloth</a>,
-                                                                    <a href="#" rel="tag">Women</a>,
-                                                                    <a href="#" rel="tag">Dress</a>
-                                                                </li>
+                                                               
+                                                                
                                                                 <li>
-                                                                    Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span>
+                                                                    Availability:<span class="in-stock text-success ml-5"><%= response1.Quantity %> Items In Stock</span>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -308,6 +235,9 @@
                                 <div class="col-lg-3 col-md-4 col-12 col-sm-6 mb-2">
                                     <div class="product-cart-wrap mb-xs-30">
                                         <div class="product-img-action-wrap">
+                                            <% if( response1.Quantity  === 0){%>
+                                                <p style="color: red;">out of stock</p>
+                                                <%} %>
                                             <div class="product-img product-img-zoom">
                                                 <a href="shop-product-right.html">
                                                     <img class="default-img" src="/uploads/<%= response1.Image[0] %>" alt=""/>
@@ -331,7 +261,7 @@
                                                       icon: 'success',
                                                       title: 'Product is successfully added to wishlist',
                                                       showConfirmButton: false,
-                                                      timer: 1500
+                                                      timer: 1000
                                                     })"
                                                     >
                                                       <i class="fi-rs-heart"></i>
@@ -341,9 +271,7 @@
                                             
                                         </div>
                                         <div class="product-content-wrap">
-                                            <div class="product-category">
-                                                <a href="shop-grid-right.html">Shoes</a>
-                                            </div>
+                                            
                                             <h2>
                                                 <a href="#">
                                                     <%=response1.Productname%>
@@ -357,12 +285,39 @@
                                                 <span>₹<%=response1.Price%></span>
                                                 <span class="old-price">₹<%=response1.Price%></span>
                                             </div>
-                                            <div class="product-action-1 show">
-                                                <a class="action-btn hover-up" id="myButton" onclick="addto_cart('<%=response1._id%>')">
-                                                    <i class="fi-rs-shopping-bag-add"></i>
-                                                </a>
-
-                                            </div>
+                                            <% if (response1.Quantity  === 0) { %>
+                                                <div class="product-action-1 show">
+                                                    <a class="action-btn hover-up" id="myButton" onclick="
+                                                     Swal.fire({
+                                                        position: 'center',
+                                                        icon: 'warning',
+                                                        title: 'Product is currently out of stock',
+                                                        showConfirmButton: false,
+                                                        timer: 1500
+                                                      })">
+                                                        <i  style="color:red ;" class="fi-rs-shopping-bag-add"></i>
+                                                    </a>
+    
+                                                </div>
+                                              
+                            
+                                              <% } else { %>
+                                                <div class="product-action-1 show">
+                                                    <a class="action-btn hover-up" id="myButton" onclick="addto_cart('<%=response1._id%>')
+                                                     Swal.fire({
+                                                        position: 'center',
+                                                        icon: 'success',
+                                                        title: 'Product is successfully added to Cart',
+                                                        showConfirmButton: false,
+                                                        timer: 1500
+                                                      })">
+                                                        <i class="fi-rs-shopping-bag-add"></i>
+                                                    </a>
+    
+                                                </div>
+                                              <% } %>
+                                              
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -543,7 +498,7 @@
 
 </section>
 
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script>
     function addto_cart(proId) {
         $.ajax({
@@ -555,6 +510,7 @@
                     let count = $('#cart-count').html()
                     count = parseInt(count) + 1
                     $('#cart-count').html(count)
+                    
 
                 }
 
@@ -579,3 +535,19 @@
     });
      }
   </script>
+  <script>
+  // Get the button element by its ID
+  const toastBtn = document.getElementById("toast-btn");
+  
+  // Add an event listener to the button
+  toastBtn.addEventListener("click", function() {
+    // Call the Toastify function
+    Toastify({
+      text: "This is a toast",
+      className: "info",
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      }
+    }).showToast();
+  });
+</script>

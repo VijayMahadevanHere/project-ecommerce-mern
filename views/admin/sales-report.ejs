@@ -46,7 +46,7 @@
            <td><%=order.userId%></td>
            <td><%=order.products.product%></td>
            <td><%=order.products.quantity%></td>
-           <td>₹<%=order.total%></td>
+           <td>₹<%=order.products.price%></td>
            <td><%=order.paymentMethod%></td>
            <td>
            <% let dateString = order.date; %>
@@ -66,8 +66,8 @@
   <hr>
 
   <hr>
-  <%}
-  %>
+  <%} %>
+ 
 
 </div> 
 

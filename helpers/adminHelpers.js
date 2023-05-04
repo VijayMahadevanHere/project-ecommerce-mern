@@ -26,7 +26,6 @@ module.exports = {
                     blocked: true
                 }
             }).then((data) => {
-                console.log('user blocked success');
 
                 resolve()
             })
@@ -42,7 +41,7 @@ module.exports = {
                     blocked: false
                 }
             }).then((data) => {
-                console.log('user unblocked success');
+               
                 resolve()
             })
         })
@@ -183,7 +182,7 @@ module.exports = {
         })
     },
     postEditBanner: (BannerId, editedData, filename) => {
-        console.log(editedData);
+    
         return new Promise(async (resolve, reject) => {
             await db.banner.updateOne({
                 _id: BannerId
@@ -211,12 +210,13 @@ module.exports = {
     addCoupon: (details) => {
         const couponName = details['coupon-name'];
         const couponDescription = details['coupon-description'];
-        const couponDate = details['coupon-date'];
+        const couponStartDate=details['coupon-date-start']
+        const couponDate = details['coupon-date-end'];
         const couponPrice = details['coupon-price'];
 
 
         return new Promise((resolve, reject) => {
-            let coupon = new db.coupon({Name: couponName, Price: couponPrice, Discription: couponDescription, Date: couponDate})
+            let coupon = new db.coupon({Name: couponName, Price: couponPrice, Discription: couponDescription, startDate: couponStartDate, endDate: couponDate})
             coupon.save().then((data) => {
                 resolve(data)
             })
@@ -239,52 +239,13 @@ module.exports = {
                 },
                 {
                     $unwind: "$products"
+               
                 },
-
-                {
-                    $group: {
-                        _id: "$_id",
-                        userId: {
-                            $first: "$userId"
-                        },
-                        orderId: {
-                            $first: "$orderId"
-                        },
-                        paymentMethod: {
-                            $first: "$paymentMethod"
-                        },
-                        products: {
-                            $push: "$products"
-                        },
-                        status: {
-                            $first: "$status"
-                        },
-                        total: {
-                            $first: "$total"
-                        },
-                        discount: {
-                            $first: "$discount"
-                        },
-                        date: {
-                            $first: "$date"
-                        },
-                        cartId: {
-                            $first: "$cartId"
-                        },
-                        __v: {
-                            $first: "$__v"
-                        }
-
-
-                    }
-                },
-                {
-                    $unwind: '$products'
-                }, 
                 {
                     $unwind: '$products'
                 }
             ]);
+ 
             resolve(response);
         });
     },
@@ -327,7 +288,7 @@ module.exports = {
                     $match: {
                         $and: [
                             {
-                                "status": "Placed"
+                                "status": "delivered"
                             }, {
                                 "date": {
                                     $gte: start,
@@ -341,7 +302,7 @@ module.exports = {
                         _id: null,
                         totalDiscount: {
                             $sum: {
-                                $toDouble: "$discount"
+                                $toDouble: "$total"
                             }
                         }
                     }
@@ -365,7 +326,7 @@ module.exports = {
                     $match: {
                         $and: [
                             {
-                                "status": "Placed"
+                                "status": "delivered"
                             }, {
                                 "date": {
                                     $gte: start,
@@ -376,44 +337,14 @@ module.exports = {
                     }
                 }, {
                     $unwind: "$products"
-                }, {
-                    $group: {
-                        _id: "$_id",
-                        userId: {
-                            $first: "$userId"
-                        },
-                        paymentMethod: {
-                            $first: "$paymentMethod"
-                        },
-                        products: {
-                            $push: "$products"
-                        },
-                        status: {
-                            $first: "$status"
-                        },
-                        total: {
-                            $first: "$total"
-                        },
-                        discount: {
-                            $first: "$discount"
-                        },
-                        date: {
-                            $first: "$date"
-                        },
-                        cartId: {
-                            $first: "$cartId"
-                        },
-                        __v: {
-                            $first: "$__v"
-                        }
-                    }
-                },
+                }, 
                 {
                     $unwind: '$products'
                 }, {
                     $unwind: '$products'
                 }
             ])
+
             resolve(prod)
         })
 
@@ -525,7 +456,7 @@ module.exports = {
         
             resolve(Items);
         } catch (err) {
-            console.error('Error getting order products: ', err);
+        
             reject(err);
         } 
     });
@@ -545,7 +476,7 @@ findCat:(id)=>{
     resolve(cat)
     })
 },
-shipOrder:(orderId)=>{
+ shipOrder:(orderId)=>{
     return new Promise(async(resolve,reject)=>{
         await db.order.updateOne({orderId:orderId},{
          $set:{
@@ -566,5 +497,20 @@ deliverOrder:(orderId)=>{
             resolve()
         })
     })
-}
+},
+deleteOrder : (id) => {
+  
+    return new Promise((resolve, reject) => {
+        try {
+                db.order.updateOne({_id: id},{
+                    $set:{
+                        status:'canceled'
+                    }
+                }).then((response) => {
+                    resolve(response)
+
+                })
+
+            } catch {reject()}}
+    )}
 }

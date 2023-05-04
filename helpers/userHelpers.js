@@ -41,7 +41,7 @@ module.exports = {
                 }
 
             } catch (err) {
-                console.log(err)
+                reject(err)
             }
         })
     },
@@ -78,7 +78,8 @@ module.exports = {
                 }
 
             } catch (err) {
-                console.log(err);
+                
+                reject(err)
             }
 
         })
@@ -111,13 +112,19 @@ module.exports = {
 
         })
     },
-
-    add_To_Cart: (userId, prodId) => {
-
+    findproduct:(prodid)=>{
+  return new Promise(async (resolve,reject)=>{
+   let prod= await db.products.findOne({_id:prodid}) 
+     resolve(prod)
+  })
+   },
+    add_To_Cart: (userId, prodId ,prodprice) => {
         return new Promise(async (resolve, reject) => {
             let proobj = {
                 product: ObjectId(prodId),
-                quantity: 1
+                quantity: 1,
+                price:prodprice
+                
             }
             let obj = {
                 userid: userId,
@@ -200,7 +207,7 @@ module.exports = {
 
                     ])
 
-
+                    
                     resolve(cartItems);
                 } catch {
                     resolve(null);
@@ -219,12 +226,26 @@ module.exports = {
         })
 
     },
-    change_Quantity : (details) => {
-
+    change_Quantity :async (details) => {
+      
         details.count = parseInt(details.count)
         details.quantity = parseInt(details.quantity)
-
+     let products= await  db.products.findOne({_id:details.product})
+      let stock=products.Quantity
+      
+      if(stock===0){
+        return({stockEmptyStatus: true})
+      }else {
+         await db.products.findOneAndUpdate(
+          { _id: details.product },
+          { $inc: { Quantity:- details.count } }
+        );
+      
+      
+  
+      
         return new Promise((resolve, reject) => {
+          
             if (details.count == -1 && details.quantity == 1) {
                 db.cart.findOneAndUpdate({
                     _id: details.cart
@@ -240,7 +261,7 @@ module.exports = {
                     reject()
                 })
             } else {
-
+      
                 db.cart.findOneAndUpdate({
                     _id: details.cart,
                     "products.product": ObjectId(details.product)
@@ -257,7 +278,7 @@ module.exports = {
 
 
         })
-
+      }
     },
     removeCartItem : (details) => {
         return new Promise((resolve, reject) => {
@@ -481,7 +502,7 @@ module.exports = {
               
                 resolve(Items);
             } catch (err) {
-                console.error('Error getting order products: ', err);
+
                 reject(err);
             } 
         });
@@ -495,7 +516,7 @@ module.exports = {
             }
             instance.orders.create(options, (err, order) => {
                 if (err) {
-                    console.log(err);
+                  
                     reject(err);
                 } else {
                     resolve(order);
@@ -639,7 +660,7 @@ module.exports = {
                     phoneNumber: Number(number),
                   }
                 }).then((data) => {
-                  console.log(data);
+                
                   resolve(data)
                 });
             });
@@ -723,9 +744,13 @@ module.exports = {
                 let wishlist = await db.wishlist.findOne({ user: userId })
                 if (wishlist) {
                     count = wishlist.wishitems.length
+                    resolve(count)
+                }else{
+                    console.log('promsoe')
+                    reject()
                 }
     
-                resolve(count)
+                
     
             })
         },
@@ -818,14 +843,27 @@ module.exports = {
         },
         
         returnOrder:(orderId)=>{
+             
             return new Promise(async(resolve,reject)=>{
                 await db.order.updateOne({orderId:orderId},{
                     $set:{
                         status:'returned'
                     }
                 }).then(async()=>{
+                  
                   let order =  await db.order.findOne({orderId:orderId})
-               
+             
+            
+            
+
+                let productsarrayLength=order.products.length
+                 for(let i=0;i<productsarrayLength;i++){
+                  
+                  let product= await db.products.findOneAndUpdate({_id:order.products[i][0].product},  { $inc: { Quantity: order.products[i][0].quantity} })
+                
+                 }
+
+
                   let userid=order.userId
                   let amount=order.total
                  let walletExist =   await db.wallet.findOne({user:userid})

@@ -45,6 +45,7 @@
           <th>Coupon Name</th>
           <th>Coupon Price</th>
           <th>Description</th>
+          <th>Starting Date</th>
           <th>Expiration Date</th>
         </tr>
       </thead>
@@ -55,9 +56,9 @@
           <td><%=response.Name%></td>
           <td><%=response.Price%></td>
           <td><%=response.Discription%></td>
-          <td><%=response.Date%></td>
-        </tr>
-       
+          <td><%=response.startDate%></td>
+          <td style="color: red;"><%=response.endDate%></td>     
+        </tr>  
         <% }) %>
       </tbody>
     </table>

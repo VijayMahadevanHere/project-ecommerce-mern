@@ -68,10 +68,13 @@
                                   
                          <p class="text-muted mb-0"><span class="fw-bold me-4" ><span>Order Status</span>:   <span style="color: red;"><%=products[0].status%></span> </p>
                                                                             
-    
-                         <a class="btn btn-danger delete-btn  " data-id="<%=products[0]._id%>">Cancel</a>
-                         <% if (products && products[0] && products[0].status !== 'returned') { %>
-                          <a class="btn btn-dark" href='/returnOrder/<%=products[0].orderId%>'>Return</a>
+                         <% if (products[0].status !== 'canceled' && products[0].status !== 'returned' && products[0].status !== 'delivered') { %>
+                          <a class="btn btn-danger delete-btn" data-id="<%= products[0]._id %>">Cancel</a>
+                        <% } %>
+                        
+                         <% if (products[0].status !== 'canceled' && products[0].status !== 'returned') { %>
+                       
+                          <a class="btn btn-dark ml-3" href='/returnOrder/<%=products[0].orderId%>'>Return</a>
                         <% } %>
                         
                         

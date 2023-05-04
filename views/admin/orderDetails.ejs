@@ -25,23 +25,28 @@
                       <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                       </div>
                       <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                        <h6 class="my-5"><%= product.proDetails.Price%></h6>
+                        <h6 class="my-5"><%= product.proDetails.Price%> X <%= product.products.quantity%> </h6>
                        
                       </div>
                       <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 ">
                         <h6 class="my-5"><%= product.proDetails.Productname%></h6>
-                     
+                        <% let dateString = product.date %>
+                        <p> Date: <%= new Date(dateString).toDateString() %></p>
                       </div>
                       <div class="mt-5 ml-5" style="font-weight: 900; color: #1e1e1c;">
                         
-                        <% let dateString = product.date %>
-                        <p> Date: <%= new Date(dateString).toDateString() %></p>
-                     
+                      
                       </div>
                     </div>
+                   
                     <% }); %>
-  
+                    <h4 style="color: green;">Total=<%= products[0].total%></h4>
+                    <h5> Address: <%= products[0].deleveryDetails.Name%>,<%= products[0].deleveryDetails.Street%> <%= products[0].deleveryDetails.Apartment%>,<%= products[0].deleveryDetails.City%></h5>
+                    <h6><%= products[0].deleveryDetails.Mobile%></h2>
+                 
+                 
                     <div class="pt-5">
+                   
                       <h6 class="mb-0"><a href="/admin" class="text-body"><i
                             class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
                     </div>
