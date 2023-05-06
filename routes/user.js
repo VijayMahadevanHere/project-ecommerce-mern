@@ -23,7 +23,7 @@ router.get(
   "/add-to-cart/:id",
   userMiddleware.userBlocked,
   controller.addToCart
-);
+)
 
 router.post("/change-product-quantity", controller.changeQuantity);
 

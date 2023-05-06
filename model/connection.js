@@ -1,5 +1,7 @@
 let mongoose = require("mongoose");
-const db = mongoose.connect("mongodb://0.0.0.0:27017/ecommerce", {
+let connect= process.env.MONGODB_CONNECT
+
+const db = mongoose.connect(connect, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

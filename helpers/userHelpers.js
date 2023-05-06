@@ -118,7 +118,11 @@ module.exports = {
      resolve(prod)
   })
    },
-    add_To_Cart: (userId, prodId ,prodprice) => {
+    add_To_Cart: async(userId, prodId ,prodprice) => {
+        await db.products.findOneAndUpdate(
+            { _id: prodId },
+            { $inc: { Quantity:- 1 } }
+          )
         return new Promise(async (resolve, reject) => {
             let proobj = {
                 product: ObjectId(prodId),
@@ -280,7 +284,12 @@ module.exports = {
         })
       }
     },
-    removeCartItem : (details) => {
+    removeCartItem :async (details) => {
+        console.log(details);
+        await db.products.findOneAndUpdate(
+            { _id: details.product },
+            { $inc: { Quantity: details.count } }
+          )
         return new Promise((resolve, reject) => {
             db.cart.findOneAndUpdate({
                 _id: details.cart

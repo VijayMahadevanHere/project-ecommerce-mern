@@ -7,7 +7,6 @@ const expressLayouts = require("express-ejs-layouts");
 const session= require('express-session')
 const nocache=require('nocache')
 
-
 require('dotenv').config();
 
 //db connection

@@ -44,7 +44,7 @@
                                                             <button class="btn btn-dark ml-2 mr-2" onclick="cartQuantity('<%= product._id %>','<%= product.proDetails._id%>','<%= locals.userId %>', 1)">
                                                               +
                                                             </button>
-                                                            <button type="button" class="btn btn-dark ml-2 mr-3" onclick="cartRemove('<%= product._id %>','<%= product.proDetails._id%>')">
+                                                            <button type="button" class="btn btn-dark ml-2 mr-3" onclick="cartRemove('<%= product._id %>','<%= product.proDetails._id%>',' <%= product.products.quantity %>')">
                                                               Remove
                                                             </button>
                                                           </div>
@@ -141,7 +141,7 @@
                                     },
                                     method: 'post',
                                     success: (response) => {
-                                        console.log('response',response)
+                                       
                                         if(response.stockEmptyStatus){
                                             alert('Stock is Empty')
 
@@ -166,14 +166,14 @@
                                 </script>
 
                             <script>
-                                function cartRemove(cartId, prodId) {
+                                function cartRemove(cartId, prodId,quantity) {
 
                                     $.ajax({
                                         url: '/remove-cart-item',
                                         data: {
                                             cart: cartId,
-                                            product: prodId
-
+                                            product: prodId,
+                                            count:parseInt(quantity) 
                                         },
                                         method: 'post',
                                         success: (response) => {

@@ -166,7 +166,9 @@
                                                                     <ins>
                                                                         <span class="text-brand">₹ <%= response1.Price %></span>
                                                                     </ins>
-                                                                
+                                                                    <% if (response1.Quantity===0) { %>
+                                                                        <p style="color: red;">out of stock</p>
+                                                                      <% } else { %>
                                                                     <span class="save-price font-md color3 ml-15"><%= response1.discountPerCent %> Off</span>
                                                                 </div>
                                                             </div>
@@ -174,9 +176,7 @@
                                                             
                                                             <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                                             <div class="detail-extralink">
-                                                                <% if (response1.Quantity===0) { %>
-                                                                    <p style="color: red;">out of stock</p>
-                                                                  <% } else { %>
+                                                               
                                                                      
                                                                 <div class="product-extra-link2">
                                                                     <button type="submit"
@@ -239,7 +239,7 @@
                                                 <p style="color: red;">out of stock</p>
                                                 <%} %>
                                             <div class="product-img product-img-zoom">
-                                                <a href="shop-product-right.html">
+                                                <a href="">
                                                     <img class="default-img" src="/uploads/<%= response1.Image[0] %>" alt=""/>
                                                     <img class="hover-img" src="/uploads/<%= response1.Image[1] %>" alt=""/>
                                                 </a>
