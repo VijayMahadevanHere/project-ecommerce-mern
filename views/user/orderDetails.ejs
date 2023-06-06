@@ -12,9 +12,12 @@
               <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: black;"></span>!</h5>
               
               <p style="display: none"; id="me"></p>
-            
-            
+                                                                  
+              <% if (products[0].status ==  'delivered') { %>
                 <button  id="download" class=" mt-15 btn  btn-success" >Download invoice</button>
+              <% } %>
+            
+               
               
           </div>
           <div id="container_content" class="card-body p-4 ">

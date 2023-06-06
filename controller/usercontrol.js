@@ -114,7 +114,7 @@ module.exports = {
             let user = req.session.user;
             const pageSize = 8
             let response1= response
-           console.log(response1,'thisis ');
+         
        
             let banner = await userhelpers.getViewBanner()
             let Category = await userhelpers.findAllcategories()  
@@ -124,7 +124,7 @@ module.exports = {
        
             if (user) {
                 res.render('user/userhome', {
-                    loginHeader: true,
+                    loginHeader: true, 
                     user,
                     response1,
                     banner,
@@ -278,10 +278,17 @@ module.exports = {
          
             let wallet =   await userhelpers.findWallet(UserId)
              
+           
+                    if(req.session.discoundPrice){
+              
+                      
+                      totalAmount[0].total=parseInt(req.session.discoundPrice)
+                    }
+             
                 res.render('user/order', {totalAmount, userid,UserId,address,wallet})
             }else{
                 res.redirect('/cart')
-            }
+            } 
         
         
          

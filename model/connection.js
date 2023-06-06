@@ -1,7 +1,7 @@
 let mongoose = require("mongoose");
 mongoose.set('strictQuery', false)
-
-const db = mongoose.connect('mongodb+srv://vijaymahadevan15:70WtRCFL9UXG621C@cluster0.go8civq.mongodb.net/test',{
+let PORT = process.env.MONGODB_ATLAS
+const db = mongoose.connect(PORT,{
   useNewUrlParser: true,
  
   useUnifiedTopology: true
